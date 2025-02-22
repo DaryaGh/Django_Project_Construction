@@ -1,0 +1,45 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.env/
+.venv/
+
+# Node.js
+node_modules/
+
+# Coverage
+.coverage
+htmlcov/
+
+# Database migrations (if you want to ignore them)
+# migrations/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# PyCharm
+.idea/
+*.iml
+
+# VS Code
+.vscode/
