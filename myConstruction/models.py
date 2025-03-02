@@ -19,7 +19,6 @@ class Category(models.Model):
     type = models.CharField(max_length=10, choices=CategoryType.choices())
     is_active = models.BooleanField(default=True)
     model_name = models.CharField(max_length=100, unique=True, blank=True, null=True)  #news,project,...
-    # content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.title
@@ -34,15 +33,14 @@ class Tag(models.Model):
     def __str__(self):
         return self.name_tag
 
+
 class Comment(models.Model):
     title = models.CharField(max_length=200, default='title', blank=True, null=True )
     body = models.TextField(null=True, blank=True)
     is_approved = models.BooleanField(default=False)
-    # ip_address = models.GenericIPAddressField()
     admin_reply = models.TextField(null=True, blank=True)
     admin_reply_at = models.DateTimeField(null=True, blank=True)
     parent = models.ForeignKey('self', null=True, blank=True, related_name='children_comment', on_delete=models.CASCADE)
-    # news = models.ForeignKey(News, on_delete=models.CASCADE, default=None, null=True, blank=True,related_name='news_comment')
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True)
     admin_approved = models.ForeignKey(User, on_delete=models.CASCADE, related_name='admin_approve', default=None, null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True, editable=False, null=True, blank=True)
@@ -72,8 +70,6 @@ class Customer(models.Model):
 class ProjectType(models.Model):
     pass
 
-class NewsDetails(models.Model):
-    pass
 
 class Project(models.Model):
     title = models.CharField(max_length=100, unique=True, blank=True, null=True, default='title_project')
@@ -82,12 +78,9 @@ class Project(models.Model):
     main_picture = models.FileField(upload_to='projects/', null=True, blank=True)
     project_web_address = models.URLField(null=True, blank=True)
     project_date = models.DateTimeField(null=True, blank=True, editable=True, auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True,
-                             related_name='user_project')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=None, null=True, blank=True,
-                                 related_name='Category_project')
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, default=None, null=True, blank=True,
-                                 related_name='Customer_project')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='user_project')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='Category_project')
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='Customer_project')
     tags = models.ManyToManyField('Tag', related_name='tags_project', blank=True)
     published_at = models.DateTimeField(default=None, null=True, blank=True)
     is_approved = models.BooleanField(default=False)
@@ -100,17 +93,15 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
+
 class News(models.Model):
     title = models.CharField(max_length=100, unique=True, blank=True, null=True, default='title_News')
     body = models.TextField(null=True, blank=True)
     summary = models.TextField(null=True, blank=True)
     main_picture = models.FileField(upload_to='news/', null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='owner')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=None, null=True, blank=True,
-                                 related_name='Category')
-    # comments = models.ForeignKey(Comment, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='Comments')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=None, null=True, blank=True,related_name='Category')
     tags = models.ManyToManyField('Tag', related_name='tags', blank=True)
-    # image = models.ManyToManyField('Image', related_name='images_news', blank=True)
     published_at = models.DateTimeField(default=None, null=True, blank=True)
     is_approved = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True, editable=False, null=True, blank=True)
@@ -121,6 +112,10 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class NewsDetails(models.Model):
+    pass
 
 
 class Service(models.Model):
