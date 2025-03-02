@@ -58,7 +58,15 @@ class Comment(models.Model):
 
 
 class Customer(models.Model):
-    pass
+    name_customer = models.CharField(max_length=100, unique=True, blank=True, null=True)
+    website = models.CharField(max_length=100, unique=True, blank=True, null=True)
+    body = models.TextField(blank=True, null=True)
+    is_active = models.BooleanField(default=False)
+    created_date = models.DateTimeField(auto_now_add=True, editable=False, null=True, blank=True)
+    updated_date = models.DateTimeField(auto_now=True, editable=False, null=True, blank=True)
+
+    def __str__(self):
+        return self.name_customer
 
 
 class ProjectType(models.Model):
