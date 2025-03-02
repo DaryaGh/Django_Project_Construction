@@ -1,8 +1,8 @@
-# from django.contrib.contenttypes.fields import GenericRelation
-# from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey , GenericRelation
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import User
 from django.db import models
 from enum import Enum
-
 
 
 class CategoryType(Enum):
@@ -25,28 +25,31 @@ class Category(models.Model):
         return self.title
 
 
+class Tag(models.Model):
+    name_tag = models.CharField(max_length=200, unique=True, blank=True, null=True)
+    is_active = models.BooleanField(default=False)
+    created_date = models.DateTimeField(auto_now_add=True, editable=False, null=True, blank=True)
+    updated_date = models.DateTimeField(auto_now=True, editable=False, null=True, blank=True)
+
+    def __str__(self):
+        return self.name_tag
+
+
+class Customer(models.Model):
+    pass
+
+
 class ProjectType(models.Model):
     pass
 
-
-class ProjectDetails(models.Model):
+class NewsDetails(models.Model):
     pass
-
 
 class Project(models.Model):
     pass
-    # name = models.CharField(max_length=100, unique=True, blank=True, null=True)
-    # description = models.TextField(blank=True, null=True)
-    # categories = GenericRelation(Category)
-
-
-
 
 class News(models.Model):
     pass
-    # title = models.CharField(max_length=100, unique=True, blank=True, null=True)
-    # content = models.TextField(blank=True, null=True)
-    # categories = GenericRelation(Category)
 
 
 class Service(models.Model):
@@ -54,10 +57,6 @@ class Service(models.Model):
 
 
 class ServiceDetail(models.Model):
-    pass
-
-
-class Comment(models.Model):
     pass
 
 
@@ -80,25 +79,9 @@ class ContactUs(models.Model):
     # email = models.CharField(max_length=100, unique=True, blank=True, null=True)
 
 
-
-class Blog(models.Model):
-    pass
-
-
-class BlogDetail(models.Model):
-    pass
-
-
-class Tag(models.Model):
-    pass
-
-
 class Setting(models.Model): # jadval tak record(title , link safahat ejtemi, tarikhche ,....)
     pass
 
 
 class Movie(models.Model):
-    pass
-
-class User(models.Model):
     pass
