@@ -49,7 +49,26 @@ class Project(models.Model):
     pass
 
 class News(models.Model):
-    pass
+    title = models.CharField(max_length=100, unique=True, blank=True, null=True, default='title_News')
+    body = models.TextField(null=True, blank=True)
+    summary = models.TextField(null=True, blank=True)
+    main_picture = models.FileField(upload_to='news/', null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='owner')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=None, null=True, blank=True,
+                                 related_name='Category')
+    # comments = models.ForeignKey(Comment, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='Comments')
+    tags = models.ManyToManyField('Tag', related_name='tags', blank=True)
+    # image = models.ManyToManyField('Image', related_name='images_news', blank=True)
+    published_at = models.DateTimeField(default=None, null=True, blank=True)
+    is_approved = models.BooleanField(default=False)
+    created_date = models.DateTimeField(auto_now_add=True, editable=False, null=True, blank=True)
+    updated_date = models.DateTimeField(auto_now=True, editable=False, null=True, blank=True)
+
+    # Generic Relation to comment
+    comments = GenericRelation('Comment', related_query_name='news_comment', null=True, blank=True)
+
+    def __str__(self):
+        return self.title
 
 
 class Service(models.Model):
