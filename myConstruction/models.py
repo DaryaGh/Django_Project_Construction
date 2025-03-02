@@ -46,7 +46,29 @@ class NewsDetails(models.Model):
     pass
 
 class Project(models.Model):
-    pass
+    title = models.CharField(max_length=100, unique=True, blank=True, null=True, default='title_project')
+    body = models.TextField(null=True, blank=True)
+    summary = models.TextField(null=True, blank=True)
+    main_picture = models.FileField(upload_to='projects/', null=True, blank=True)
+    project_web_address = models.URLField(null=True, blank=True)
+    project_date = models.DateTimeField(null=True, blank=True, editable=True, auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True,
+                             related_name='user_project')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=None, null=True, blank=True,
+                                 related_name='Category_project')
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, default=None, null=True, blank=True,
+                                 related_name='Customer_project')
+    tags = models.ManyToManyField('Tag', related_name='tags_project', blank=True)
+    published_at = models.DateTimeField(default=None, null=True, blank=True)
+    is_approved = models.BooleanField(default=False)
+    created_date = models.DateTimeField(auto_now_add=True, editable=False, null=True, blank=True)
+    updated_date = models.DateTimeField(auto_now=True, editable=False, null=True, blank=True)
+
+    # Generic Relation to comment
+    comments = GenericRelation('Comment', related_query_name='project_comment', null=True, blank=True)
+
+    def __str__(self):
+        return self.title
 
 class News(models.Model):
     title = models.CharField(max_length=100, unique=True, blank=True, null=True, default='title_News')
