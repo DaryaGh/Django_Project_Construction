@@ -156,3 +156,8 @@ class Setting(models.Model): # jadval tak record(title , link safahat ejtemi, ta
 
 class Movie(models.Model):
     pass
+
+
+# Gallery
+class Image(models.Model):
+    pass
