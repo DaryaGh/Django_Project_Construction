@@ -6,7 +6,7 @@ The `urlpatterns` list routes URLs to views. For more information please see:
 Examples:
 Function views
     1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+    2. Add a URL to urlpatterns:  path('', views. Home, name='home')
 Class-based views
     1. Add an import:  from other_app.views import Home
     2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
@@ -17,11 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from myConstruction.views import Home
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', Home , name='home'),
 
+    #manage
     path('admin/', admin.site.urls),
 
+    #public
     path('myConstruction/', include('myConstruction.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
