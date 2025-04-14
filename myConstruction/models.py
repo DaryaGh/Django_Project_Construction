@@ -2,6 +2,8 @@ from django.contrib.contenttypes.fields import GenericForeignKey , GenericRelati
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 from django.db import models
+from django.db import models
+import random
 from enum import Enum
 
 
@@ -84,7 +86,7 @@ class Project(models.Model):
     project_web_address = models.URLField(null=True, blank=True)
     project_date = models.DateTimeField(null=True, blank=True, editable=True, auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='user_project')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='Category_project')
+    project_type = models.ForeignKey(ProjectType, on_delete=models.CASCADE, null=True, blank=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='Customer_project')
     tags = models.ManyToManyField('Tag', related_name='tags_project', blank=True)
     published_at = models.DateTimeField(default=None, null=True, blank=True)
@@ -97,6 +99,11 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+
+    def get_random_tag(self):
+        related_tags = self.tags.all()
+        return random.choice(list(related_tags)) if related_tags.exists() else None
 
 
 class News(models.Model):
