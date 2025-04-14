@@ -1,13 +1,188 @@
+{% load static %}
+
 <!doctype html>
-<html lang="en">
+<html lang="fa">
 <head>
+
+
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>صفحه اصلی - انبوه سازان</title>
+
+    <!-- Favicons -->
+    <link href="{% static 'img/favicon.png' %}" rel="icon">
+    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.rtl.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'fonts/fonts.css' %}" rel="stylesheet">
+
+
 </head>
-<body>
-    <h1>hello</h1>
+
+<body class="index-page" dir="rtl">
+
+
+<header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+        <a href="{% url 'home' %}" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
+            <h1 class="site-name">انبوه سازان</h1> <span>.</span>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+{#                <li><a href="home.html" class="active">خانه</a></li>#}
+                <li><a href="{% url 'home' %}" class="active">خانه</a></li>
+                <li><a href="{% url 'about_us' %}">درباره ما</a></li>
+                <li><a href="{% url 'services' %}">خدمات</a></li>
+                <li><a href="{% url 'projects' %}">پروژه ها</a></li>
+                <li><a href="{% url 'news' %}">اخبار</a></li>
+                <li class="dropdown"><a href="#"><span>منو</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    <ul>
+                        <li><a href="#">لینک 1</a></li>
+                        <li class="dropdown"><a href="#"><span>زیر منو</span> <i
+                                class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <ul>
+                                <li><a href="#">زیر منو 1</a></li>
+                                <li><a href="#">زیر منو 2</a></li>
+                                <li><a href="#">زیر منو 3</a></li>
+                                <li><a href="#">زیر منو 4</a></li>
+                                <li><a href="#">زیر منو 5</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">لینک 2</a></li>
+                        <li><a href="#">لینک 3</a></li>
+                        <li><a href="#">لینک 4</a></li>
+                    </ul>
+                </li>
+                <li><a href="{% url 'contact_us' %}">تماس با ما</a></li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+    </div>
+</header>
+
+
+<main class="main">
+
+    {% block content %}
+
+    {% endblock %}
+
+</main>
+
+
+<footer id="footer" class="footer dark-background">
+
+    <div class="container footer-top">
+        <div class="row gy-4">
+            <div class="col-lg-4 col-md-6 footer-about">
+                <a href="index.html" class="logo d-flex align-items-center">
+                    <span class="sitename">انبوه سازان</span>
+                </a>
+                <div class="footer-contact pt-3">
+                    <p>تهران - خیابان ولیعصر - خیابان جام جم</p>
+                    <p>سازمان صدا و سیمای جمهوری اسلامی ایران</p>
+                    <p class="mt-3"><strong>تلفن : </strong><span>09366941148</span></p>
+                    <p><strong>پست الکترونیکی : </strong><span>info@example.com</span></p>
+                </div>
+                <div class="social-links d-flex mt-4">
+                    <a href="#"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+                <h4>لینک های مفید</h4>
+                <ul>
+                    <li><a href="{% url 'home' %}">صفحه اصلی</a></li>
+                    <li><a href="{% url 'about_us' %}">درباره ما</a></li>
+                    <li><a href="{% url 'services' %}">خدمات</a></li>
+                    <li><a href="{% url 'news' %}">اخبار</a></li>
+                    <li><a href="{% url 'projects' %}">پروژه ها</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+                <h4>خدمات ما</h4>
+                <ul>
+                    <li><a href="#">طراحی وب</a></li>
+                    <li><a href="#">توسعه وب</a></li>
+                    <li><a href="#">مدیریت محصولات</a></li>
+                    <li><a href="#">بازریابی</a></li>
+                    <li><a href="#">طراحی گرافیک</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+                <h4>لینک های مفید</h4>
+                <ul>
+                    <li><a href="#">لینک 1</a></li>
+                    <li><a href="#">لینک 2</a></li>
+                    <li><a href="#">لینک 3</a></li>
+                    <li><a href="#">لینک 4</a></li>
+                    <li><a href="#">لینک 5</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-3 footer-links">
+                <h4>لینک های مفید</h4>
+                <ul>
+                    <li><a href="#">لینک 1</a></li>
+                    <li><a href="#">لینک 2</a></li>
+                    <li><a href="#">لینک 3</a></li>
+                    <li><a href="#">لینک 4</a></li>
+                    <li><a href="#">لینک 5</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+        <p><!--© <span>Copyright</span>--> <strong class="px-1 sitename">انبوه سازان</strong>
+            <span>تمامی حقوق محفوظ هست</span></p>
+        <div class="credits">
+            طراحی و توسعه توسط <a href="#">دریا غفاری</a>
+        </div>
+    </div>
+
+</footer>
+
+<!-- Scroll Top -->
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Preloader -->
+<div id="preloader"></div>
+
+<!-- Vendor JS Files -->
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'vendor/aos/aos.js' %}"></script>
+<script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+<script src="{% static 'vendor/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+<script src="{% static 'vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
+<script src="{% static 'vendor/purecounter/purecounter_vanilla.js' %}"></script>
+
+<!-- Main JS File -->
+<script src="{% static 'js/main.js' %}"></script>
+
 </body>
+
 </html>
