@@ -6,6 +6,17 @@ from django.db import models
 import random
 from enum import Enum
 
+class Carousel(models.Model):
+    title = models.CharField(max_length=100)
+    image_path = models.ImageField(upload_to='carousels/' , null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+
+    # def __str__(self):
+    #     return self.image_path.url
+
+    def __str__(self):
+        return self.title
+
 
 class CategoryType(Enum):
     NEWS = 'News'
