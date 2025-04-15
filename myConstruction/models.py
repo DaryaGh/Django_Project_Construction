@@ -165,6 +165,6 @@ class Movie(models.Model):
     pass
 
 
-# Gallery
+# Gallery(other pictures) / Generic relation
 class Image(models.Model):
     pass
