@@ -4,6 +4,7 @@ from myConstruction.models import *
 
 
 admin.site.register(Category)
+admin.site.register(Carousel)
 admin.site.register(News)
 admin.site.register(Comment)
 admin.site.register(Tag)
