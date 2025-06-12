@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}
+
+    About_Us
+
+{% endblock %}
+
+
+{% block content %}
+    {#    <h1>About_Us</h1>#}
+    <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url({% static 'img/page-title-bg.jpg' %});">
+        <div class="container position-relative">
+            <h1>درباره ما</h1>
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="{% url 'home' %}">صفحه اصلی</a></li>
+                    <li class="current">درباره ما</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- End Page Title -->
+
+    <section class="container mt-4">
+        {% for box in boxes %}
+            {% if data %}
+                <ul class="list-group">
+                    {% for d in data %}
+                        <li class="list-group-item {{ box.border_class }} {{ box.bg_class }} {{ box.text_class }} p1 rounded">{{ d.title }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <div class="alert alert-secondary">
+                    <h5>Server Is Error !!!</h5>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </section>
+{% endblock %}
+
