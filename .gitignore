@@ -7,7 +7,10 @@ local_settings.py
 db.sqlite3
 media/
 staticfiles/
-
+myConstruction/admin-copy.py
+myConstruction/models-copy.py
+myConstruction/views-copy-2.py
+myConstruction/views-copy.py
 # IDE
 .vscode/
 .idea/
