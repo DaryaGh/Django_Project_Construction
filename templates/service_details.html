@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static  %}
+
+{% block page_title %}
+    
+    services_details
+    
+{% endblock %}
+
+
+{% block content %}
+    <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url({% static 'img/page-title-bg.jpg' %});">
+      <div class="container position-relative">
+        <h1>جزئیات خدمات</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="{% url 'home' %}">صفحه اصلی</a></li>
+            <li class="current">جزئیات خدمات</li>
+              <li class="current">{{ services }}</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <!-- End Page Title -->
+
+     <!-- Service Details Section -->
+    <section id="service-details" class="service-details section">
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="services-list">
+              <a href="#" class="active">طراحی وب</a>
+              <a href="#">توسعه نرم‌افزار</a>
+              <a href="#">مدیریت محصول</a>
+              <a href="#">طراحی گرافیک</a>
+              <a href="#">بازاریابی</a>
+            </div>
+
+            <h4>لورم ایپسوم متن ساختگی با تولید سادگی</h4>
+            <p>              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز</p>
+          </div>
+{% for servicesdetails in servicesdetails %}
+          <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
+            <img src="/img/services.jpg" alt="" class="img-fluid services-img">
+            <h3>{{ servicesdetails.title }}</h3>
+            <p>
+              {{ servicesdetails.content }}
+            </p>
+            <ul>
+              <li><i class="bi bi-check-circle"></i> <span>{{ servicesdetails.body }}</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>{{ servicesdetails.body }}</span></li>
+              <li><i class="bi bi-check-circle"></i> <span>{{ servicesdetails.body }}</span></li>
+            </ul>
+            <p>
+            {{ servicesdetails.summary }}
+            </p>
+            <p>
+              {{ servicesdetails.description  }}
+            </p>
+          </div>
+{% endfor %}
+        </div>
+
+      </div>
+
+    </section><!-- /Service Details Section -->
+
+
+
+{% endblock %}

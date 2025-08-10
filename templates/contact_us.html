@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% load static  %}
+
+{% block page_title %}
+    
+    Contact_Us
+    
+{% endblock %}
+
+
+{% block content %}
+    <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url({% static 'img/page-title-bg.jpg' %});">
+      <div class="container position-relative">
+        <h1>تماس با ما</h1>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="{% url 'home' %}">صفحه اصلی</a></li>
+            <li class="current">تماس با ما</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <!-- End Page Title -->
+{% endblock %}

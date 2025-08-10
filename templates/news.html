@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load jalali_tags %}
+{% load static %}
+{% block page_title %}
+    News
+{% endblock %}
+{% block content %}
+    <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url({% static 'img/page-title-bg.jpg' %});">
+        <div class="container position-relative">
+            <h1>اخبار</h1>
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="{% url 'home' %}">صفحه اصلی</a></li>
+                    <li class="current">اخبار{% if category_name %} {{ category_name }} {% elif tag_name %}
+                        {{ tag_name }} {% endif %}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- End Page Title -->
+    <!-- Blog Posts Section -->
+    <section id="blog-posts" class="blog-posts section">
+        <div class="container">
+            <div class="row gy-4">
+                {% for news_item in news %}
+                    <div class="col-lg-4">
+                        <article class="post-item position-relative h-100" data-aos="fade-up" data-aos-delay="100">
+                            <div class="post-img position-relative overflow-hidden">
+                                <img src="{{ news_item.main_picture.url }}" class="img-fluid"
+                                     alt="{{ news_item.title }}">
+{#                                <span class="post-date">{{ news_item.published_at|to_jalali:'%H:%M:%S - %Y/%m/%d' }}</span>#}
+                            <span class="post-date">
+  {{ news_item.published_at|to_jalali:'%d' }}
+  {% with month=news_item.published_at|to_jalali:'%m'|add:0 %}
+    {% if month == 1 %}فروردین
+    {% elif month == 2 %}اردیبهشت
+    {% elif month == 3 %}خرداد
+    {% elif month == 4 %}تیر
+    {% elif month == 5 %}مرداد
+    {% elif month == 6 %}شهریور
+    {% elif month == 7 %}مهر
+    {% elif month == 8 %}آبان
+    {% elif month == 9 %}آذر
+    {% elif month == 10 %}دی
+    {% elif month == 11 %}بهمن
+    {% elif month == 12 %}اسفند
+    {% endif %} ماه
+  {% endwith %}
+</span>
+
+                            </div>
+                            <div class="post-content d-flex flex-column">
+                                <h3 class="post-title">{{ news_item.title }}</h3>
+
+                                <div class="meta d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-person"></i> <span class="ps-2">{{ news_item.author }}</span>
+                                    </div>
+                                    <span class="px-3 text-black-50">/</span>
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-folder2"></i> <span class="ps-2">{{ news_item.category }}</span>
+                                    </div>
+
+                                </div>
+                                <p class="small mt-2">{{ news_item.summary }}</p>
+                                <hr>
+                                <a href="{% url 'news-details' news_item.id %}" class="readmore stretched-link"><span>مطالعه بیشتر</span><i
+                                        class="bi bi-arrow-left"></i></a>
+                            </div>
+                        </article>
+                    </div><!-- End post item -->
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- Blog Pagination Section -->
+    <section id="blog-pagination" class="blog-pagination section">
+        <div class="container">
+            <div class="d-flex justify-content-center">
+                <ul class="pagination pagination-lg">
+                    {% if news.has_previous %}
+                        <li class="page-item">
+                            <a href="?page={{ news.previous_page_number }}"
+                               aria-label="Previous">
+                                <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for num in news.paginator.page_range %}
+                        {% if num <= 10 %}
+                            <li class="page-item {% if news.number == num %} active {% endif %}">
+                                <a href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if news_page.has_next %}
+                        <li class="page-item">
+                            <a href="?page={{ news.next_page_number }}" aria-label="Next">
+                                <i class="bi bi-chevron-left"></i>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!-- /Blog Pagination Section -->
+
+{% endblock %}

@@ -1,12 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load jalali_tags %}
 {% block page_title %}
-
     About_Us
-
 {% endblock %}
-
 
 {% block content %}
     {#    <h1>About_Us</h1>#}
@@ -23,7 +20,6 @@
         </div>
     </div>
     <!-- End Page Title -->
-
     <section class="container mt-4">
         {% for box in boxes %}
             {% if data %}

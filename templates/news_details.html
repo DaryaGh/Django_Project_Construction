@@ -1,0 +1,932 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load jalali_tags %}
+
+
+{% block page_title %}
+    {{ news }}
+{% endblock %}
+
+
+{% block content %}
+    <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url({% static 'img/page-title-bg.jpg' %});">
+        <div class="container position-relative">
+            <h1>جزئیات خبر</h1>
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="{% url 'home' %}">صفحه اصلی</a></li>
+                    <li><a href="{% url 'news' %}">اخبار</a></li>
+                    <li class="current">{{ news }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+
+                <!-- Blog Details Section -->
+                <section id="blog-details" class="blog-details section">
+                    <div class="container">
+                        <article class="article">
+                            <div class="post-img">
+                                <img src="{{ news.main_picture.url }}" alt="{{ news }}" class="img-fluid"
+                                     title="{{ news }}">
+                            </div>
+                            <h2 class="title">{{ news }}</h2>
+                            <div class="meta-top">
+                                <ul>
+                                    <li class="d-flex align-items-center">
+                                        <i class="bi bi-people"></i>
+                                        {% if news.author %}
+                                            <a href="{% url 'author-detail' news.author.id %}" class="me-1">
+                                                {{ news.author.name_author }}
+                                            </a>
+                                        {% else %}
+                                            <span>نویسنده ناشناس</span>
+                                        {% endif %}
+                                    </li>
+
+                                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i>
+                                        <time datetime="2020-01-01">{{ news.published_at|to_jalali:"%Y/%m/%d" }}</time>
+                                    </li>
+                                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <span
+                                    >{{ news.comments.count }} نظر</span></li>
+                                    <li class="d-flex align-items-center">
+                                        <i class="bi bi-hand-thumbs-up-fill text-success"></i>
+                                        <a id="like-btn" href="{% url 'news-like' news.id %}">{{ news.like_count }}
+                                            پسند</a>
+                                    </li>
+                                    <li class="d-flex align-items-center">
+                                        <i class="bi bi-hand-thumbs-down-fill text-danger"></i>
+                                        <a id="dislike-btn"
+                                           href="{% url 'news-dislike' news.id %}">{{ news.dislike_count }}ناپسند</a>
+                                    </li>
+                                    <li class="d-flex align-items-center">
+                                        <i class="bi bi-eye-fill text-warning fa-lg"></i>
+                                        <span id="view_count">{{ news.views }} بازدید</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- End meta top -->
+                            <div class="content">
+                                <p>{{ news.body }}</p>
+                                <p>{{ news.explanation }}</p>
+
+                                <blockquote>
+                                    <p>{{ news.summary }}</p>
+                                </blockquote>
+
+                                <p>{{ news.content }}</p>
+
+                                <h3>{{ news.name_title_blockquote }}</h3>
+
+                                <p>{{ news.description }}</p>
+
+                                <div class="row my-4">
+                                    {% for news in news.images.all %}
+                                        <div class="portfolio-info">
+                                            <a href="{{ news.image_path.url }}"
+                                               data-gallery="portfolio-gallery-app" class="glightbox ">
+                                                <img src="{{ news.image_path.url }}" class="img-fluid"
+                                                     alt="{{ news.Title }}">
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <h3>{{ news.name_title }}</h3>
+                                <p>{{ news.body }}</p>
+                                <p>{{ news.description }}</p>
+
+                            </div>
+                            <!-- End post content -->
+                            <div class="meta-bottom">
+                                <i class="bi bi-folder"></i>
+                                <ul class="cats">
+                                    <li>
+                                        <a href="{% url 'news_by_category' news.category.id %}">
+                                            {{ news.category }}
+                                        </a>
+                                    </li>
+                                </ul>
+                                <i class="bi bi-tags"></i>
+                                <ul class="tags">
+                                    {% for tag in news.tags.all %}
+                                        <li><a href="{% url 'news_by_tag' tag.id %}">{{ tag }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <!-- End meta bottom -->
+                        </article>
+                    </div>
+                </section>
+
+                <!-- Blog Author Section -->
+                <section id="blog-author" class="blog-author section">
+                    <div class="container">
+                        {% if news.author %}
+                            <div class="author-container d-flex align-items-center">
+
+
+                                <img src="{{ author.image_author.url }}" class="rounded-circle flex-shrink-0" alt="{{ author.name_author }}">
+
+
+                                <div>
+                                    <h4>{{ news.author.name_author }}</h4>
+
+                                    <div class="social-links">
+                                        <a href="https://x.com/#"><i class="bi bi-twitter-x"></i></a>
+                                        <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
+                                        <a href="https://instagram.com/#"><i class="biu bi-instagram"></i></a>
+                                    </div>
+
+                                    {% if news.author.body_author %}
+                                        <p class="author-bio">{{ news.author.body_author }}</p>
+                                    {% endif %}
+                                </div>
+
+                            </div>
+                        {% else %}
+                            <div class="alert alert-info">نویسنده‌ای برای این خبر تعیین نشده است</div>
+                        {% endif %}
+                    </div>
+                </section>
+
+                <!-- Blog Comments Section -->
+                <section id="blog-comments" class="blog-comments section">
+                    <div class="container">
+                        {% if comments %}
+                            <h4 class="comments-count"> {{ comments|length }}نظر</h4>
+                            {% for comment in comments %}
+                                <div id="" class="comment {% comment %}{% if comment.parent_id %} comment-reply {% endif %}{% endcomment %}">
+                                    <div class="d-flex">
+                                        <div class="comment-img">
+                                            <img src="assets/img/blog/comments-1.jpg" alt="">
+                                        </div>
+                                        <div>
+                                            <h5>
+
+                                                {% if comment.user %}
+                                                    <button >{{ comment.user.get_full_name|default:comment.user.username }}</button>
+                                                {% elif comment.username_comment %}
+                                                    {{ comment.username_comment }}
+                                                {% else %}
+                                                    کاربر مهمان
+                                                {% endif %}
+
+                                                <button class="reply-btn" data-item="{{ comment.id }}"
+                                                        data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                    <i class="bi bi-reply-fill"></i> پاسخ
+                                                </button>
+                                            </h5>
+                                            <time datetime="{{ comment.created_date }}">{{ comment.created_date|to_jalali:'%H:%M:%S - %Y/%m/%d' }}</time>
+                                            <p>{{ comment.body }}</p>
+                                        </div>
+                                    </div>
+
+
+                                    {% for cmt in comment.comments_in %}
+                                        <div class="comment comment-reply">
+                                          <div class="d-flex">
+                                            <div class="comment-img"><img src="assets/img/blog/comments-3.jpg" alt=""></div>
+                                            <div>
+                                              <h5><a href="">{{ cmt.username_comment }}</a> <a href="#" class="reply"><i class="bi bi-reply-fill"></i> پاسخ</a></h5>
+                                              <time datetime="2020-01-01">2 خرداد 1403</time>
+                                              <p>{{ cmt.body }}</p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    {% endfor %}
+
+                                </div>
+                                <!-- End comment #1 -->
+                                {% if comment.admin_reply %}
+                                    <div id="" class="comment comment-reply ">
+                                        <div class="d-flex">
+                                            <div class="comment-img">
+                                                <img src="assets/img/blog/comments-1.jpg" alt="">
+                                            </div>
+                                            <div>
+                                                <h5 class="text-danger">
+                                                    Admin Reply
+                                                </h5>
+                                                <time datetime="{{ comment.admin_reply_at }}">
+                                                    {{ comment.admin_reply_at|to_jalali:'%H:%M:%S - %Y/%m/%d' }}
+                                                </time>
+                                                <p class="text-warning">
+                                                    {{ comment.admin_reply }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                {% if comment.author_reply %}
+                                    <div id="" class="comment comment-reply ">
+                                        <div class="d-flex">
+                                            <div class="comment-img">
+                                                <img src="assets/img/blog/comments-1.jpg" alt="">
+                                            </div>
+                                            <div>
+                                                <h5 class="text-info">
+                                                    Author Reply
+                                                </h5>
+                                                <time datetime="{{ comment.author_reply_at }}">
+                                                    {{ comment.author_reply_at|to_jalali:'%H:%M:%S - %Y/%m/%d' }}
+                                                </time>
+                                                <p class="text-success">
+                                                    {{ comment.author_reply }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+
+                        {% else %}
+                            <div class="alert alert-danger">
+                                NO comments
+                            </div>
+                        {% endif %}
+
+                    </div>
+                </section>
+                <!-- /Blog Comments Section -->
+
+                <!-- Comment Form Section -->
+                <section id="comment-form" class="comment-form section">
+                    <div class="container">
+                        <div class="alert alert-primary alert-dismissible fade show d-none" id="comment-alert">
+                            <i class="fa fa-check me-2"></i>
+                            <div id="response" class="d-inline-block">
+
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <form action="" id="comment_form">
+                            {% csrf_token %}
+                            <h4>ثبت نظر</h4>
+                            <p>آدرس ایمیل شما منتشر نخواهد شد. فیلدهای الزامی با * علامت گذاری شده اند </p>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <input name="username" type="text" class="form-control"
+                                           placeholder="نام نام خانوادگی *">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <input name="email" type="text" class="form-control" placeholder="پست الکترونیکی*">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col form-group">
+                                    <input name="website" type="text" class="form-control" placeholder="وب سایت">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col form-group">
+                                    <textarea name="comment" class="form-control" placeholder="نظر*"></textarea>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">ارسال نظر</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+                <!-- /Comment Form Section -->
+            </div>
+            <div class="col-lg-4 sidebar">
+
+                <div class="widgets-container">
+                    <!-- Search Widget -->
+                    <div class="search-widget widget-item">
+                        <h3 class="widget-title">جست و جو</h3>
+                        <form action="{% url 'news' %}">
+                            <input type="text" name="query">
+                            <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+                        </form>
+                    </div>
+                    <!--/Search Widget -->
+
+                    <!-- Categories Widget -->
+                    <div class="categories-widget widget-item">
+                        <h3 class="widget-title">دسته بندی</h3>
+                        <ul class="mt-3">
+                            {% for cat in categories %}
+                                <li>
+                                    <a href="{% url 'news_by_category' cat.id %}">
+                                        {{ cat }}
+                                        <span>{{ cat.news_count }}</span>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <!--/Categories Widget -->
+
+                    <!-- Recent Posts Widget -->
+                    <div class="recent-posts-widget widget-item">
+                        <h3 class="widget-title">آخرین اخبار</h3>
+                        {% for recent in recent_news %}
+                            <div class="post-item">
+                                <img src="{{ recent.main_picture.url }}" alt="" class="flex-shrink-0">
+                                <div>
+                                    <h4>
+                                        <a href="{% url 'news-details' recent.id %}">
+                                            {{ recent|truncatewords:3 }}
+                                        </a>
+                                    </h4>
+                                    <time datetime="{{ news.published_at }}">{{ news.published_at|to_jalali:"%Y/%m/%d" }}</time>
+                                </div>
+                            </div>
+                            <!-- End recent post item-->
+                        {% endfor %}
+                    </div>
+                    <!--/Recent Posts Widget -->
+
+                    <!-- Most Visited Posts Widget -->
+                    <div class="recent-posts-widget widget-item">
+                        <h3 class="widget-title">بیشترین بازدید خبر</h3>
+                        {% for news in most_visited_news %}
+                            <div class="post-item">
+                                <img src="{{ news.main_picture.url }}" alt="" class="flex-shrink-0">
+                                <div>
+                                    <h4>
+                                        <a href="{% url 'news-details' news.id %}"
+                                           data-bs-toggle="popover"
+                                           data-bs-placement="right"
+                                           data-bs-title="چکیده خبر"
+                                           data-bs-custom-class="news-popover"
+                                           data-bs-content="{{ news.summary }}"
+                                           data-bs-trigger="hover focus"
+                                        >
+                                            {{ news|truncatewords:3 }}
+                                        </a>
+                                    </h4>
+                                    <span class="badge bg-primary">
+                                        {{ news.views }}
+                                    </span>
+                                    <time datetime="{{ news.published_at }}">{{ news.published_at|to_jalali:"%Y/%m/%d" }}</time>
+                                </div>
+                            </div>
+                            <!-- End recent post item-->
+                        {% endfor %}
+                    </div>
+                    <!--/Recent Posts Widget -->
+
+                    <!-- Interested News Posts Widget -->
+                    <div class="recent-posts-widget widget-item">
+                        <h3 class="widget-title">محبوب ترین خبر</h3>
+                        {% for news in interested_news %}
+                            <div class="post-item">
+                                <img src="{{ news.main_picture.url }}" alt="" class="flex-shrink-0">
+                                <div>
+                                    <h4>
+                                        <a href="{% url 'news-details' news.id %}">
+
+                                            {{ news|truncatewords:3 }}
+                                        </a>
+                                    </h4>
+                                    <span class="badge bg-primary">
+                                        {{ news.like_count }}
+                                    </span>
+                                    <time datetime="{{ news.published_at }}">
+                                        {{ news.published_at|to_jalali:"%Y/%m/%d" }}
+                                    </time>
+                                </div>
+                            </div>
+                            <!-- End recent post item-->
+                        {% endfor %}
+                    </div>
+                    <!--/Recent Posts Widget -->
+
+                    <!-- Discuss News Posts Widget -->
+
+                    <div class="recent-posts-widget widget-item">
+                        <h3 class="widget-title">پربحث ترین خبر</h3>
+                        {% for news in discuss_news %}
+                            <div class="post-item">
+                                <img src="{{ news.main_picture.url }}" alt="" class="flex-shrink-0">
+                                <div>
+                                    <h4>
+                                        <a href="{% url 'news-details' news.id %}">
+                                            {{ news.title|truncatewords:3 }}
+                                        </a>
+                                    </h4>
+                                    <time datetime="{{ news.published_at }}">
+                                        {{ news.published_at|to_jalali:"%Y/%m/%d" }}
+                                    </time>
+                                    <span class="badge bg-info">
+                                         {{ news.comment_count }} نظر
+                                     </span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!--/Recent Posts Widget -->
+                    <button onclick="confirmDelete({{ news.id }})" class="mb-3 btn btn-outline-danger">حذف خبر</button>
+                    <!-- Tags Widget -->
+                    <div class="tags-widget widget-item">
+                        <h3 class="widget-title">برچسب ها</h3>
+                        <ul>
+                            {% for tag in news.tags.all %}
+                                <li>
+                                    <a href="{% url 'news_by_tag' tag.id %}">
+                                        {{ tag }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <!--/Tags Widget -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- End Page Title -->
+
+    <!-- Toast -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="ajaxToast" aria-live="assertive" role="alert" aria-atomic="true" class="toast"
+             data-bs-autohide="false">
+            <div class="toast-header">
+                <strong class="me-auto" id="toastTitle">Bootstrap</strong>
+                <small id="toast_time">11 mins ago</small>
+            </div>
+            <div class="toast-body" id="toastMessage">
+                Hello, world! This is a toast message.
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-3 shadow">
+                <div class="modal-body p-4">
+
+                    <form action="" id="reply_frm" autocomplete="off">
+                        <input type="hidden" name="parent" value="{{ parent_id }}" id="parent">
+
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                <i class="fas fa-comment-alt me-2"></i>
+                                پاسخ به نظر
+                            </h1>
+                        </div>
+                        <hr>
+                        <div class="mb-3">
+                            <label for="username" class="form-label text-muted">
+                                <i class="fas fa-user me-1"></i>
+                                نام :
+                            </label>
+                            <input type="text" class="form-control rounded-pill" id="username" name="username"
+                                   placeholder="Enter Name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label text-muted">
+                                <i class="fas fa-envelope me-1"></i>
+                                ایمیل :
+                            </label>
+                            <input type="email" class="form-control rounded-pill" id="email" name="email"
+                                   placeholder="Enter Email">
+                            <p class="text-muted small mt-1">آدرس ایمیل شما منتشر نخواهد شد. </p>
+                        </div>
+                        <div class="mb-3">
+                            <label for="website" class="form-label text-muted">
+                                <i class="fas fa-globe me-1"></i>
+                                وبسایت (اختیاری):
+                            </label>
+                            <input type="url" class="form-control rounded-pill" id="website" name="website"
+                                   placeholder="Enter Website">
+                        </div>
+                        <div class="mb-3">
+                            <label for="comment" class="form-label text-muted">
+                                <i class="fas fa-pen me-1"></i>
+                                نظر خود را وارد کنید :
+                            </label>
+                            <textarea class="form-control" id="comment" name="comment" rows="4"
+                                      style="border-radius: 15px;" required placeholder="Enter Comment"></textarea>
+                            <div class="form-text">نظر شما پس از تایید نمایش داده می‌شود</div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-outline-secondary rounded-pill px-4"
+                                    data-bs-dismiss="modal">
+                                <i class="fas fa-times me-1"></i>
+                                انصراف
+                            </button>
+                            <button type="submit" class="btn btn-primary rounded-pill px-4" form="reply_frm">
+                                <i class="fas fa-paper-plane me-1"></i>
+                                ارسال نظر
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function getCSRFToken() {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, 10) === 'csrftoken=') {
+                        cookieValue = decodeURIComponent(cookie.substring(10));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+
+            /* --------------------- */
+            // not modal
+            document.getElementById("comment_form").addEventListener('submit', function (e){
+                e.preventDefault()
+
+                const usernameValue = document.querySelector("#comment_form [name=username]").value
+                const emailValue = document.querySelector("#comment_form [name=email]").value
+                const websiteValue = document.querySelector("#comment_form [name=website]").value
+                const commentValue = document.querySelector("#comment_form [name=comment]").value
+
+                fetch("{% url 'news-comment' news.id %}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken
+                        },
+                        body: JSON.stringify({
+                            username: usernameValue,
+                            email: emailValue,
+                            website: websiteValue,
+                            comment: commentValue
+                        })
+                    }).then((res) => res.json())
+                        .then((data) => {
+                            if (data.success) {
+                                document.querySelector("#comment-alert #response").innerText = data.success
+                                document.getElementById("comment_form").reset()
+                            } else if(data.error) {
+                                document.querySelector("#comment-alert #response").innerText = data.error
+                            } else {
+                                document.querySelector("#comment-alert #response").innerText = "unknown error!"
+                            }
+                            document.getElementById("comment-alert").classList.remove('d-none')
+                        })
+
+            })
+            /* --------------------- */
+
+
+            const replyButtons = document.querySelectorAll('.reply-btn')
+
+            replyButtons.forEach(function (btn) {
+                btn.addEventListener("click", function (event) {
+                    console.log(this.getAttribute('data-item'))
+                    document.querySelector("#parent").value = this.getAttribute('data-item')
+                    const myModalAlternative = new bootstrap.Modal('#exampleModal')
+                    myModalAlternative.show()
+                })
+            })
+
+
+            // بخش ارسال نظر اصلی
+            const commentFormElm = document.querySelector("#comment_frm");
+            if (commentFormElm) {
+                commentFormElm.addEventListener('submit', function (event) {
+                    event.preventDefault();
+
+                    const formData = new FormData(commentFormElm);
+                    const jsonData = {};
+
+                    formData.forEach((value, key) => {
+                        jsonData[key] = value;
+                    });
+                    const csrfToken = getCSRFToken();
+
+                    fetch("{% url 'news-comment' news.id %}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken
+                        },
+                        body: JSON.stringify(jsonData)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showToast(data.success, 'Success', 'success');
+                                commentFormElm.reset();
+
+
+                            } else {
+                                showToast(data.error || "Error submitting comment", 'Error', 'danger');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showToast("An error occurred", "Error", "danger");
+                        });
+                });
+            }
+
+            // بخش ارسال نظر اصلی
+            const replyFormElm = document.querySelector("#reply_frm");
+            if (replyFormElm) {
+                replyFormElm.addEventListener('submit', function (event) {
+                    event.preventDefault();
+
+                    const formData = new FormData(replyFormElm);
+                    const jsonData = {};
+
+                    formData.forEach((value, key) => {
+                        jsonData[key] = value;
+                    });
+
+                    const csrfToken = getCSRFToken();
+
+                    fetch("{% url 'news-comment' news.id %}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken
+                        },
+                        body: JSON.stringify(jsonData)
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showToast(data.success, 'Success', 'success');
+                                replyFormElm.reset();
+// بستن خودکار مودال پس از ارسال موفق
+                                const modal = bootstrap.Modal.getInstance(document.getElementById('exampleModal'));
+                                modal.hide();
+
+
+                            } else {
+                                showToast(data.error || "Error submitting comment", 'Error', 'danger');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            showToast("An error occurred", "Error", "danger");
+                        });
+                });
+            }
+
+            // بخش لایک/دیسلایک
+            const likeBtn = document.getElementById("like-btn");
+            const dislikeBtn = document.getElementById('dislike-btn');
+
+
+            if (likeBtn && dislikeBtn) {
+                likeBtn.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    fetch("{% url 'news-like' news.id %}", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken
+                        },
+                        credentials: 'same-origin'
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            updateButtons(data);
+                        })
+                        .catch(error => {
+                            console.error('Like error:', error);
+                        });
+                });
+
+                dislikeBtn.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    fetch("{% url 'news-dislike' news.id %}", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken
+                        },
+                        credentials: 'same-origin'
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            updateButtons(data);
+                        })
+                        .catch(error => {
+                            console.error('Dislike error:', error);
+                        });
+                });
+            }
+
+            // تابع برای به روزرسانی دکمه‌ها
+            function updateButtons(data) {
+                const likeBtn = document.getElementById('like-btn');
+                const dislikeBtn = document.getElementById('dislike-btn');
+                if (likeBtn && dislikeBtn) {
+                    likeBtn.textContent = `${data.like_count} پسند`;
+                    dislikeBtn.textContent = `${data.dislike_count} ناپسند`;
+
+                    // تغییر استایل بر اساس وضعیت لایک/دیسلایک
+                    if (data.liked) {
+                        likeBtn.classList.add('active-like');
+                        dislikeBtn.classList.remove('active-dislike');
+                    } else if (data.disliked) {
+                        dislikeBtn.classList.add('active-dislike');
+                        likeBtn.classList.remove('active-like');
+                    } else {
+                        likeBtn.classList.remove('active-like');
+                        dislikeBtn.classList.remove('active-dislike');
+                    }
+                }
+            }
+        });
+    </script>
+
+    <script>
+        function getCSRFToken() {
+            const cookieValue = document.cookie
+                .split('; ')
+                .find(row => row.startsWith('csrftoken='))
+                ?.split('=')[1];
+            return cookieValue || document.querySelector('[name=csrfmiddlewaretoken]')?.value;
+        }
+
+        const csrfToken = getCSRFToken();
+        // تابع اصلی حذف
+        window.confirmDelete = function (newsId) {
+            console.log("Attempting to delete news with ID:", newsId);
+            Swal.fire({
+                title: 'Are you sure ? ',
+                text: "This action is irreversible!!!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'YES , Delete it !',
+                cancelButtonText: 'No ,Thank !!!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log("User confirmed deletion");
+                    fetch(`{% url 'delete_news' 0 %}`.replace('0', newsId), {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrfToken,
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'same-origin'
+                    })
+                        .then(response => {
+                            console.log("Response status:", response.status);
+                            if (!response.ok) {
+                                return response.json().then(err => {
+                                    throw err;
+                                });
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log("Response data:", data);
+                            if (data.status === 'success') {
+                                Swal.fire('Delete!', data.message, 'success');
+                                const newsElement = document.querySelector(`[data-news-id="${newsId}"]`);
+                                if (newsElement) {
+                                    newsElement.remove();
+                                }
+                            } else {
+                                throw new Error(data.message || 'Unknown error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                            Swal.fire('Error', error.message || 'Error deleting news', 'error');
+                        });
+                }
+            });
+        };
+    </script>
+
+    <script>
+        function showToast(message, title = "Notification", type = "info") {
+            const toastEL = document.getElementById('ajaxToast')
+            const toastTitle = document.getElementById('toastTitle')
+            const toastMessage = document.getElementById('toastMessage')
+            toastTitle.textContent = title
+            toastMessage.textContent = message
+            toastEL.classList.remove('bg-success', 'bg-danger', 'bg-warning', 'bg-info', 'text-white')
+            switch (type) {
+                case 'success':
+                    toastEL.classList.add('bg-success', 'text-white')
+                    break
+                case 'danger':
+                    toastEL.classList.add('bg-danger', 'text-white')
+                    break
+                case 'warning':
+                    toastEL.classList.add('bg-warning', 'text-white')
+                    break
+                case 'info':
+                    toastEL.classList.add('bg-info', 'text-white')
+                    break
+            }
+            const toast = new bootstrap.Toast(toastEL)
+            toast.show()
+        }
+
+        function getCSRToken() {
+
+            const cookieValue = document.cookie
+                .split('; ')
+                .find(row => row.startsWith('csrftoken='))
+                ?.split('=')[1];
+            if (!cookieValue) {
+                console.error('CSRF token not found in cookies');
+                return null;
+            }
+            return cookieValue;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const csrfToken = getCSRToken()
+            // First AJAX call
+            $.ajax({
+                url: "{% url 'increment-views' %}",
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": csrfToken
+                },
+                data: `model_type=news&object_id=${ {{ news.id }} }`
+            })
+                .done(function (data) {
+                    const viewCountElement = document.getElementById('view_count');
+                    if (viewCountElement) {
+                        viewCountElement.textContent = data.views + ' بازدید';
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                });
+
+            // Second AJAX call with credentials
+            $.ajax({
+                url: "{% url 'increment-views' %}",
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-CSRFToken": csrfToken
+                },
+                data: `model_type=news&object_id=${ {{ news.id }} }`,
+                xhrFields: {
+                    withCredentials: true
+                }
+            })
+                .done(function (data) {
+                    if (data.status === 'ok') {
+                        showToast(data.message, data.toast_title, data.toast_color);
+                        if (data.time) {
+                            document.getElementById('toast_time').textContent = data.time;
+                        }
+                        if (data.views !== undefined) {
+                            document.getElementById('view_count').textContent = data.views + ' بازدید';
+                        }
+                    } else {
+                        console.error('Server error:', data.message);
+                    }
+                })
+                .fail(function (jqXHR, textStatus, errorThrown) {
+                    console.error('AJAX error:', textStatus, errorThrown);
+                    showToast('Error', 'Error communicating with the server.', 'danger');
+                });
+
+            console.log("CSRF Token:", csrfToken);
+            console.log("News ID:", {{ news.id }});
+        })
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+            popoverTriggerList.map(function (popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl);
+            });
+        });
+    </script>
+
+{% endblock %}
+
+
+
+
+

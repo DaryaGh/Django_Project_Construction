@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load jalali_tags %}
+
+
+{% block page_title %}
+    {{ author }}
+{% endblock %}
+
+
+
+{% block content %}
+   <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url({% static 'img/page-title-bg.jpg' %});">
+        <div class="container position-relative">
+            <h1>جزئیات خبر</h1>
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="{% url 'home' %}">صفحه اصلی</a></li>
+                    <li><a href="{% url 'news' %}">اخبار</a></li>
+                    <li class="current">{{ author }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <section class="author-profile py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 text-center">
+                {% if author.image_author %}
+                    <img src="{{ author.image_author.url }}"
+                         class="img-fluid rounded-circle mb-3"
+                         alt="{{ author.name_author }}"
+                         width="200">
+                {% endif %}
+                <h2>{{ author.name_author }}</h2>
+                {% if author.body_author %}
+                    <p class="text-muted">{{ author.body_author }}</p>
+                {% endif %}
+            </div>
+
+            <div class="col-md-8">
+                <h3 class="mb-4">اخبار منتشر شده</h3>
+                <div class="list-group">
+                    {% for news in news_list %}
+                        <a href="{% url 'news-details' news.id %}"
+                           class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ news.title }}</h5>
+                                <small>{{ news.published_at|to_jalali:"%Y/%m/%d" }}</small>
+                            </div>
+                            <p class="mb-1">{{ news.summary|truncatewords:20 }}</p>
+                            <small class="text-muted">
+                                <i class="bi bi-eye"></i> {{ news.views }} بازدید
+                            </small>
+                        </a>
+                    {% empty %}
+                        <div class="alert alert-info">هنوز خبری منتشر نشده است</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

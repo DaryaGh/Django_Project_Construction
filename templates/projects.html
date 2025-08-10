@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load jalali_tags %}
+
+{% block page_title %}
+    Project
+{% endblock %}
+
+{% block content %}
+    <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url({% static 'img/page-title-bg.jpg' %});">
+        <div class="container position-relative">
+            <h1>پروژه ها</h1>
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="{% url 'home' %}">صفحه اصلی</a></li>
+                    <li class="current">پروژه ها</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- End Page Title -->
+    <!-- Projects Section -->
+    <section id="projects" class="projects section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <h2>پروژه ها</h2>
+            <p>پروژه ها در چهار مرحله بازسازی, ساخت و ساز , تعمیرات , طراحی نمایش داده میشوند</p>
+        </div><!-- End Section Title -->
+        <div class="container">
+            <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+                <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+                    <li data-filter="*" class="filter-active">همه</li>
+                    {% for project_type in project_types %}
+                        <li data-filter=".filter-{{ project_type.id }}">{{ project_type }}</li>
+                    {% endfor %}
+                </ul><!-- End Portfolio Filters -->
+                <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+                    {% for project in home_projects %}
+                        <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-{{ project.project_type_id }}">
+                            <div class="portfolio-content h-100">
+                                <img src="{{ project.main_picture.url }}" class="img-fluid" alt='{{ project.title }}'>
+                                <div class="portfolio-info">
+                                    <h4>{{ project.get_random_tag }}</h4>
+                                    <p>{{ project.title }}</p>
+                                    <a href="{{ project.main_picture.url }}" title="{{ project.get_random_tag }}"
+                                       data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i
+                                            class="bi bi-zoom-in"></i></a>
+                                    <a href="{% url 'project-details' project.id %}" title="More Details"
+                                       class="details-link"><i
+                                            class="bi bi-link-45deg"></i></a>
+                                </div>
+                            </div>
+                        </div><!-- End Portfolio Item -->
+                    {% endfor %}
+                </div><!-- End Portfolio Container -->
+            </div>
+        </div>
+    </section><!-- /Projects Section -->
+
+{% endblock %}

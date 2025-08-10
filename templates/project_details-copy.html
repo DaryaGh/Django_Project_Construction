@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}
+    {{ project }}
+{% endblock %}
+
+
+{% block content %}
+    <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url({% static 'img/page-title-bg.jpg' %});">
+        <div class="container position-relative">
+            <h1>جزئیات پروژه</h1>
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="{% url 'home' %}">صفحه اصلی</a></li>
+                    <li><a href="{% url 'projects' %}"> پروژه ها</a></li>
+                    <li class="current">جزئیات پروژه</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- End Page Title -->
+    <!-- Project Details Section -->
+    <section id="project-details" class="project-details section">
+
+        <div class="container" data-aos="fade-up">
+
+            <div class="portfolio-details-slider swiper init-swiper">
+                <script type="application/json" class="swiper-config">
+                    {
+                      "loop": true,
+                      "speed": 600,
+                      "autoplay": {
+                        "delay": 5000
+                      },
+                      "slidesPerView": "auto",
+                      "navigation": {
+                        "nextEl": ".swiper-button-next",
+                        "prevEl": ".swiper-button-prev"
+                      },
+                      "pagination": {
+                        "el": ".swiper-pagination",
+                        "type": "bullets",
+                        "clickable": true
+                      }
+                    }
+                </script>
+                <div class="swiper-wrapper align-items-center">
+                    {% for project in project.images.all %}
+                        <div class="swiper-slide">
+                            <img src="{{ project.image_path.url }}" class="img-fluid" alt="...">
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+
+            <div class="row justify-content-between gy-4 mt-4">
+
+                <div class="col-lg-8" data-aos="fade-up">
+                    <div class="portfolio-description">
+                        <h2>{{ project }}</h2>
+                        <p>
+                            {{ project.body }}
+                        </p>
+                        <p>
+                            {{ project.description }}
+                        </p>
+
+                        <div class="testimonial-item">
+                            <p>
+                                <i class="bi bi-quote quote-icon-left"></i>
+                                <span>{{ project.summary }}</span>
+                                <i class="bi bi-quote quote-icon-right"></i>
+                            </p>
+                            <div>
+
+                                <h3>{{ project.authors }}</h3>
+                                <h4>طراح</h4>
+                            </div>
+                        </div>
+
+                        <p>
+                            {{ project.content }}
+                        </p>
+
+                        <p>
+                            {{ project.explanation }}
+                        </p>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-info">
+                        <h3>اطلاعات پروژه</h3>
+                        <ul>
+                            <li><strong>دسته</strong>{{ project.category }}</li>
+                            <li><strong>مشتری</strong>{{ project.customer }}</li>
+                            <li><strong>تاریخ انجام پروژه</strong>{{ project.project_date }}</li>
+                            <li><strong>آدرس پروژه</strong> <a href="#">{{ project.project_web_address }}</a></li>
+                            <li><a href="https://loremsaz.com/lorem_ipsum" class="btn-visit align-self-start">مشاهده وب
+                                سایت</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section><!-- /Project Details Section -->
+
+
+{% endblock %}
+
+
+{#{% extends 'base.html' %}#}
+{#{% load static %}#}
+{##}
+{#{% block page_title %}#}
+{##}
+{#    {{ project }}#}
+{##}
+{#{% endblock %}#}
+{##}
+{##}
+{#{% block content %}#}
+{#    <!-- Page Title -->#}
+{#    <div class="page-title dark-background" style="background-image: url({% static 'img/page-title-bg.jpg' %});">#}
+{#        <div class="container position-relative">#}
+{#            <h1>جزئیات پروژه</h1>#}
+{#            <nav class="breadcrumbs">#}
+{#                <ol>#}
+{#                    <li><a href="{% url 'home' %}">صفحه اصلی</a></li>#}
+{#                    <li><a href="{% url 'projects' %}"> پروژه ها</a></li>#}
+{#                    <li class="current">جزئیات پروژه</li>#}
+{#                </ol>#}
+{#            </nav>#}
+{#        </div>#}
+{#    </div>#}
+{#    <!-- End Page Title -->#}
+{#    <!-- Project Details Section -->#}
+{#    <section id="project-details" class="project-details section">#}
+{##}
+{#        <div class="container" data-aos="fade-up">#}
+{##}
+{#            <div class="portfolio-details-slider swiper init-swiper">#}
+{#                <script type="application/json" class="swiper-config">#}
+{#                    {#}
+{#                      "loop": true,#}
+{#                      "speed": 600,#}
+{#                      "autoplay": {#}
+{#                        "delay": 5000#}
+{#                      },#}
+{#                      "slidesPerView": "auto",#}
+{#                      "navigation": {#}
+{#                        "nextEl": ".swiper-button-next",#}
+{#                        "prevEl": ".swiper-button-prev"#}
+{#                      },#}
+{#                      "pagination": {#}
+{#                        "el": ".swiper-pagination",#}
+{#                        "type": "bullets",#}
+{#                        "clickable": true#}
+{#                      }#}
+{#                    }#}
+{#                </script>#}
+{#                <div class="swiper-wrapper align-items-center">#}
+{##}
+{#                    {% for image in images %}#}
+{#                    {% for project in project.images.all %}#}
+{#                        <div class="swiper-slide">#}
+{##}
+{##}
+{#                            <img src="{{ project.image_path.url }}" class="img-fluid" alt="...">#}
+{##}
+{#                                                    <img src="{{ images.image_path.url }}" alt="....">#}
+{##}
+{#                                                    <img src="http://127.0.0.1:8000/media/images/remodeling-1.jpg" alt="....">#}
+{#                            <img src="http://127.0.0.1:8000/media/{{ image.image_path }}" alt="....">#}
+{#                        </div>#}
+{#                    {% endfor %}#}
+{#                    {% endfor %}#}
+{##}
+{#                                <div class="swiper-slide">#}
+{#                                  <img src="{% static 'img/projects/remodeling-1.jpg'  %}" alt="">#}
+{#                                </div> #}
+{##}
+{#                                <div class="swiper-slide">#}
+{#                                  <img src="{% static 'img/projects/remodeling-2.jpg'  %}" alt="">#}
+{#                                </div>#}
+{##}
+{#                                <div class="swiper-slide">#}
+{#                                  <img src="{% static 'img/projects/remodeling-3.jpg'  %}" alt="">#}
+{#                                </div>#}
+{##}
+{##}
+{#                </div>#}
+{#                <div class="swiper-button-prev"></div>#}
+{#                <div class="swiper-button-next"></div>#}
+{#                <div class="swiper-pagination"></div>#}
+{#            </div>#}
+{##}
+{#            <div class="row justify-content-between gy-4 mt-4">#}
+{##}
+{#                <div class="col-lg-8" data-aos="fade-up">#}
+{#                    <div class="portfolio-description">#}
+{#                        <h2>{{ project }}</h2>#}
+{#                        <p>#}
+{#                            {{ project.body }}#}
+{#                        </p>#}
+{#                        <p>#}
+{#                            {{ project.description }}#}
+{#                        </p>#}
+{##}
+{#                        <div class="testimonial-item">#}
+{#                            <p>#}
+{#                                <i class="bi bi-quote quote-icon-left"></i>#}
+{#                                <span>{{ project.summary }}</span>#}
+{#                                <i class="bi bi-quote quote-icon-right"></i>#}
+{#                            </p>#}
+{#                            <div>#}
+{#                  <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">#}
+{#                                <h3>{{ project.authors }}</h3>#}
+{#                                <h4>طراح</h4>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                        <p>#}
+{#                            {{ project.content }}#}
+{#                        </p>#}
+{##}
+{#                        <p>#}
+{#                            {{ project.explanation }}#}
+{#                        </p>#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#                <div class="col-lg-3" data-aos="fade-up" data-aos-delay="100">#}
+{#                    <div class="portfolio-info">#}
+{#                        <h3>اطلاعات پروژه</h3>#}
+{#                        <ul>#}
+{#                            <li><strong>دسته</strong>{{ project.category }}</li>#}
+{#                            <li><strong>مشتری</strong>{{ project.customer }}</li>#}
+{#                            <li><strong>تاریخ انجام پروژه</strong>{{ project.project_date }}</li>#}
+{#                            <li><strong>آدرس پروژه</strong> <a href="#">{{ project.project_web_address }}</a></li>#}
+{#                            <li><a href="https://loremsaz.com/lorem_ipsum" class="btn-visit align-self-start">مشاهده وب#}
+{#                                سایت</a></li>#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#            </div>#}
+{##}
+{#        </div>#}
+{##}
+{#    </section><!-- /Project Details Section -->#}
+{##}
+{##}
+{#{% endblock %}#}

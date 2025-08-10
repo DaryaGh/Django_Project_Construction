@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_title %}
+
+    services
+
+{% endblock %}
+
+
+{% block content %}
+    <!-- Page Title -->
+    <div class="page-title dark-background" style="background-image: url({% static 'img/page-title-bg.jpg' %});">
+        <div class="container position-relative">
+            <h1>خدمات</h1>
+            <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="{% url 'home' %}">صفحه اصلی</a></li>
+                    <li class="current">خدمات</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- End Page Title -->
+
+    <!-- Services Section -->
+    <section id="services" class="services section light-background">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <h2>خدمات</h2>
+            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است</p>
+        </div><!-- End Section Title -->
+
+        <div class="container">
+            <div class="row gy-4">
+                {% for services in services %}
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="service-item  position-relative">
+                            <div class="icon">
+                                <i class="fa-solid fa-{{ services.icon_name }}"></i>
+                            </div>
+                            <h3>{{ services.title }}</h3>
+                            <p>
+                                {{ services.description }}
+                            </p>
+                            <div class="text-end mt-3">
+                                <a href="{% url 'services-details' services.id %}" class="readmore stretched-link">مطالعه بیشتر <i class="bi bi-arrow-left"></i></a>
+                            </div>
+                        </div>
+                    </div><!-- End Service Item -->
+                {% endfor %}
+            </div>
+        </div>
+    </section><!-- /Services Section -->
+
+    <!-- Features Cards Section -->
+    <section id="features-cards" class="features-cards section">
+        <div class="container">
+            <div class="row gy-4">
+                {% for feature in feature %}
+                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ feature.delay_time }}">
+                        <h3>لورم ایپسوم متن ساختگی</h3>
+                        <p>ورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است،
+                            چاپگرها و متون بلکه روزنامه<</p>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check2"></i> <span>{{ feature.description }}</span></li>
+                            <li><i class="bi bi-check2"></i> <span>{{ feature.content }}</span></li>
+                            <li><i class="bi bi-check2"></i> <span>{{ feature.body }}</span></li>
+                        </ul>
+                    </div><!-- End feature item-->
+                {% endfor %}
+            </div>
+        </div>
+    </section><!-- /Features Cards Section -->
+
+    <!-- Alt Services 2 Section -->
+    <section id="alt-services-2" class="alt-services-2 section">
+        <div class="container">
+            <div class="row justify-content-around gy-4">
+                <div class="col-lg-6 d-flex flex-column justify-content-center order-2 order-lg-1" data-aos="fade-up"
+                     data-aos-delay="{{ services.delay_time }}">
+                    <h3>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h3>
+                    <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است،
+                        چاپگرها و متون بلکه روزنامه</p>
+                    {% for servicesfeature in servicesfeatures %}
+                        <div class="row">
+                            <div class="col-lg-6 icon-box d-flex">
+                                <i class="bi bi-{{ servicesfeature.icon_name }} flex-shrink-0"></i>
+                                <div>
+                                    <h4>{{ servicesfeature.title }}</h4>
+                                    <p>{{ servicesfeature.description }}</p>
+                                </div>
+                            </div><!-- End Icon Box -->
+                        </div>
+                    {% endfor %}
+                </div>
+                {% for servicesfeature in servicesfeatures %}
+                    {% for image in servicesfeature.images.all %}
+                        <div class="features-image col-lg-5 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="200">
+                            <img src="media/{{ image.image.url }}" alt="">
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </section><!-- /Alt Services 2 Section -->
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <h2>نظر مشتریان ما</h2>
+            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است</p>
+        </div><!-- End Section Title -->
+        <div class="container" data-aos="fade-up" data-aos-delay="{{ services.delay_time }}">
+            <div class="swiper init-swiper">
+                <script type="application/json" class="swiper-config">
+                    {
+                      "loop": true,
+                      "speed": 600,
+                      "autoplay": {
+                        "delay": 5000
+                      },
+                      "slidesPerView": "auto",
+                      "pagination": {
+                        "el": ".swiper-pagination",
+                        "type": "bullets",
+                        "clickable": true
+                      },
+                      "breakpoints": {
+                        "320": {
+                          "slidesPerView": 1,
+                          "spaceBetween": 40
+                        },
+                        "1200": {
+                          "slidesPerView": 2,
+                          "spaceBetween": 20
+                        }
+                      }
+                    }
+                </script>
+                <div class="swiper-wrapper">
+                    {% for swiper in swiper %}
+                        <div class="swiper-slide">
+                            <div class="testimonial-wrap">
+                                <div class="testimonial-item">
+                                    <img src="media/{{ swiper.main_image }}" class="testimonial-img"
+                                         alt="{{ swiper.name_of_alt }}">
+                                    <h3>{{ swiper.name_swiper }}</h3>
+                                    <h4>{{ swiper.job_swiper }}</h4>
+                                    <div class="stars">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                            class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                            class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p>
+                                        <i class="bi bi-quote quote-icon-left"></i>
+                                        <span>{{ swiper.description_swiper }}</span>
+                                        <i class="bi bi-quote quote-icon-right"></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </div><!-- End testimonial item -->
+                    {% endfor %}
+                </div><!-- End testimonial item -->
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section><!-- /Testimonials Section -->
+
+{% endblock %}

@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'myConstruction'
+    # 'django_jalali',
+    'jalali_date',
+    'myConstruction',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -49,6 +52,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'myConstruction.middleware.AdminIpRestrictionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -110,6 +114,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'fa-ir'
+# import locale
+# locale.setlocale(locale.LC_ALL, "fa_IR.UTF-8")
 
 
 TIME_ZONE = 'Asia/Tehran'
@@ -127,6 +134,8 @@ USE_TZ = True
 
 # settings.py
 STATIC_URL = '/static/'
+
+
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # Default primary key field type
@@ -136,4 +145,29 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 MEDIA_URL = '/media/'  # URL prefix for media files
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+ALLOWED_ADMIN_IPS = [
+    '192.168.1.100', #Example ip
+    '127.0.0.1'
+]
+
+# تنظیمات تقویم جلالی
+JALALI_DATE_DEFAULTS = {
+    'Strftime': {
+        'date': '%y/%m/%d',
+        'datetime': '%H:%M:%S _ %y/%m/%d',
+    },
+    'Static': {
+        'js': [
+            'admin/js/django_jalali.min.js',
+        ],
+        'css': {
+            'all': [
+                'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css',
+            ]
+        }
+    },
+}
+
+
