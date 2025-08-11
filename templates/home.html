@@ -12,17 +12,19 @@
 
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
-<div class="info d-flex align-items-center">
-        <div class="container">
-          <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="100">
-            <div class="col-lg-10 text-center">
-              <h2 class="display-4">لورم ایپسوم متن ساختگی با تولید سادگی</h2>
-              <p class="d-none d-lg-block">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است</p>
-              <a href="#get-started" class="btn-get-started">درباره ما</a>
+        <div class="info d-flex align-items-center">
+            <div class="container">
+                <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="col-lg-10 text-center">
+                        <h2 class="display-4">لورم ایپسوم متن ساختگی با تولید سادگی</h2>
+                        <p class="d-none d-lg-block">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
+                            استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم
+                            است</p>
+                        <a href="{% url 'history_us' %}" class="btn-get-started">تاریخچه ما</a>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
         <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel">
 
             <div class="carousel-indicators z-3">
@@ -45,7 +47,7 @@
                     <img src=" media/{{ carousel.image_path }}" alt="{{ carousel.name_of_alt }}">
                     {% if carousel.caption or carousel.caption_description %}
                         <div class="carousel-caption d-none d-md-block z-3">
-{#                            <h1 class="display-1">{{ carousel.caption }}</h1>#}
+                            {#                            <h1 class="display-1">{{ carousel.caption }}</h1>#}
                             <p>{{ carousel.caption_description }}</p>
 
                         </div>
@@ -85,8 +87,8 @@
                 </div>
 
                 <div class="col-lg-5" data-aos="zoom-out" data-aos-delay="200">
-{#                    <form action="forms/quote.php" method="post" class="php-email-form">#}
-                        <form action="" method="post" class="php-email-form" id="comment_frm">
+                    {#                    <form action="forms/quote.php" method="post" class="php-email-form">#}
+                    <form action="" method="post" class="php-email-form" id="comment_frm">
 
                         <h3>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ</h3>
                         <p>
@@ -142,90 +144,27 @@
         <div class="container">
 
             <div class="row gy-4">
-
-                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="card-item">
-                        <div class="row">
-                            <div class="col-xl-5">
-                                <div class="card-bg"><img src="assets/img/constructions-1.jpg" alt=""></div>
-                            </div>
-                            <div class="col-xl-7 d-flex align-items-center">
-                                <div class="card-body">
-                                    <h4 class="card-title">لورم ایپسوم متن ساختگی</h4>
-                                    <p class="small">
-                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                                        برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                                        کاربردی می باشد
-                                    </p>
+                {% for construction in construction %}
+                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card-item">
+                            <div class="row">
+                                <div class="col-xl-5">
+                                    <div class="card-bg">
+                                        <img src="{{ construction.main_picture.url }}"
+                                             alt="{{ construction.name_alt }}"></div>
+                                </div>
+                                <div class="col-xl-7 d-flex align-items-center">
+                                    <div class="card-body">
+                                        <h4 class="card-title">{{ construction.title }}</h4>
+                                        <p class="small">
+                                            {{ construction.body }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div><!-- End Card Item -->
-
-                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="card-item">
-                        <div class="row">
-                            <div class="col-xl-5">
-                                <div class="card-bg"><img src="assets/img/constructions-2.jpg" alt=""></div>
-                            </div>
-                            <div class="col-xl-7 d-flex align-items-center">
-                                <div class="card-body">
-                                    <h4 class="card-title">لورم ایپسوم متن ساختگی</h4>
-                                    <p class="small">
-                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                                        برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                                        کاربردی می باشد
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- End Card Item -->
-
-                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="card-item">
-                        <div class="row">
-                            <div class="col-xl-5">
-                                <div class="card-bg"><img src="assets/img/constructions-3.jpg" alt=""></div>
-                            </div>
-                            <div class="col-xl-7 d-flex align-items-center">
-                                <div class="card-body">
-                                    <h4 class="card-title">لورم ایپسوم متن ساختگی</h4>
-                                    <p class="small">
-                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                                        برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                                        کاربردی می باشد
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- End Card Item -->
-
-                <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
-                    <div class="card-item">
-                        <div class="row">
-                            <div class="col-xl-5">
-                                <div class="card-bg"><img src="assets/img/constructions-4.jpg" alt=""></div>
-                            </div>
-                            <div class="col-xl-7 d-flex align-items-center">
-                                <div class="card-body">
-                                    <h4 class="card-title">لورم ایپسوم متن ساختگی</h4>
-                                    <p class="small">
-                                        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و
-                                        برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای
-                                        کاربردی می باشد
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div><!-- End Card Item -->
+                    </div><!-- End Card Item -->
+                {% endfor %}
 
             </div>
 
@@ -246,107 +185,23 @@
 
             <div class="row gy-4">
 
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="service-item  position-relative">
-                        <div class="icon">
-                            <i class="fa-solid fa-mountain-city"></i>
+                {% for services in services %}
+                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="service-item  position-relative">
+                            <div class="icon">
+                                <i class="fa-solid fa-{{ services.icon_name }}"></i>
+                            </div>
+                            <h3>{{ services.title }}</h3>
+                            <p>
+                                {{ services.description }}
+                            </p>
+                            <div class="text-end mt-3">
+                                <a href="{% url 'services-details' services.id %}" class="readmore stretched-link">مطالعه
+                                    بیشتر <i class="bi bi-arrow-left"></i></a>
+                            </div>
                         </div>
-                        <h3>لورم ایپسوم متن ساختگی</h3>
-                        <p>
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-                            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
-                        </p>
-                        <div class="text-end mt-3">
-                            <a href="service-details.html" class="readmore stretched-link">مطالعه بیشتر <i
-                                    class="bi bi-arrow-left"></i></a>
-                        </div>
-                    </div>
-                </div><!-- End Service Item -->
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="service-item position-relative">
-                        <div class="icon">
-                            <i class="fa-solid fa-arrow-up-from-ground-water"></i>
-                        </div>
-                        <h3>لورم ایپسوم متن ساختگی</h3>
-                        <p>
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-                            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
-                        </p>
-                        <div class="text-end mt-3">
-                            <a href="#" class="readmore stretched-link">مطالعه بیشتر <i
-                                    class="bi bi-arrow-left"></i></a>
-                        </div>
-                    </div>
-                </div><!-- End Service Item -->
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="service-item position-relative">
-                        <div class="icon">
-                            <i class="fa-solid fa-compass-drafting"></i>
-                        </div>
-                        <h3>لورم ایپسوم متن ساختگی</h3>
-                        <p>
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-                            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
-                        </p>
-                        <div class="text-end mt-3">
-                            <a href="#" class="readmore stretched-link">مطالعه بیشتر <i
-                                    class="bi bi-arrow-left"></i></a>
-                        </div>
-                    </div>
-                </div><!-- End Service Item -->
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                    <div class="service-item position-relative">
-                        <div class="icon">
-                            <i class="fa-solid fa-trowel-bricks"></i>
-                        </div>
-                        <h3>لورم ایپسوم متن ساختگی</h3>
-                        <p>
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-                            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
-                        </p>
-                        <div class="text-end mt-3">
-                            <a href="#" class="readmore stretched-link">مطالعه بیشتر <i
-                                    class="bi bi-arrow-left"></i></a>
-                        </div>
-                    </div>
-                </div><!-- End Service Item -->
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
-                    <div class="service-item position-relative">
-                        <div class="icon">
-                            <i class="fa-solid fa-helmet-safety"></i>
-                        </div>
-                        <h3>لورم ایپسوم متن ساختگی</h3>
-                        <p>
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-                            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
-                        </p>
-                        <div class="text-end mt-3">
-                            <a href="#" class="readmore stretched-link">مطالعه بیشتر <i
-                                    class="bi bi-arrow-left"></i></a>
-                        </div>
-                    </div>
-                </div><!-- End Service Item -->
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
-                    <div class="service-item position-relative">
-                        <div class="icon">
-                            <i class="fa-solid fa-arrow-up-from-ground-water"></i>
-                        </div>
-                        <h3>لورم ایپسوم متن ساختگی</h3>
-                        <p>
-                            لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-                            چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
-                        </p>
-                        <div class="text-end mt-3">
-                            <a href="#" class="readmore stretched-link">مطالعه بیشتر <i
-                                    class="bi bi-arrow-left"></i></a>
-                        </div>
-                    </div>
-                </div><!-- End Service Item -->
+                    </div><!-- End Service Item -->
+                {% endfor %}
 
             </div>
 
@@ -359,9 +214,11 @@
 
         <div class="container">
 
+
             <div class="row justify-content-around gy-4">
                 <div class="features-image col-lg-6" data-aos="fade-up" data-aos-delay="100"><img
-                        src="assets/img/alt-services.jpg" alt=""></div>
+                        src="/static/img/alt-services.jpg" alt=""></div>
+
 
                 <div class="col-lg-5 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
                     <h3>لورم ایپسوم متن ساختگی </h3>
@@ -369,56 +226,22 @@
                         لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
                         چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
                     </p>
+                    {% for servicesfeature in servicesfeature %}
+                        <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="300">
+                            <i class="bi bi-{{ servicesfeature.icon_name }} flex-shrink-0"></i>
+                            <div>
+                                <h4><a href="" class="stretched-link">{{ servicesfeature.title }}</a></h4>
+                                <p>
+                                    {{ servicesfeature.description }}
+                                </p>
+                            </div>
 
-                    <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="300">
-                        <i class="bi bi-easel flex-shrink-0"></i>
-                        <div>
-                            <h4><a href="" class="stretched-link">لورم ایپسوم متن ساختگی</a></h4>
-                            <p>
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                                است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
-                            </p>
-                        </div>
-                    </div><!-- End Icon Box -->
+                        </div><!-- End Icon Box -->
 
-                    <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="400">
-                        <i class="bi bi-patch-check flex-shrink-0"></i>
-                        <div>
-                            <h4><a href="" class="stretched-link">لورم ایپسوم متن ساختگی</a></h4>
-                            <p>
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                                است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
-                            </p>
-                        </div>
-                    </div><!-- End Icon Box -->
-
-                    <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="500">
-                        <i class="bi bi-brightness-high flex-shrink-0"></i>
-                        <div>
-                            <h4><a href="" class="stretched-link">لورم ایپسوم متن ساختگی</a></h4>
-                            <p>
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                                است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
-                            </p>
-                        </div>
-                    </div><!-- End Icon Box -->
-
-                    <div class="icon-box d-flex position-relative" data-aos="fade-up" data-aos-delay="600">
-                        <i class="bi bi-brightness-high flex-shrink-0"></i>
-                        <div>
-                            <h4><a href="" class="stretched-link">لورم ایپسوم متن ساختگی</a></h4>
-                            <p>
-                                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                                است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
-                            </p>
-                        </div>
-                    </div><!-- End Icon Box -->
-
+                    {% endfor %}
                 </div>
             </div>
-
         </div>
-
     </section><!-- /Alt Services Section -->
 
     <section id="features" class="features section">
@@ -562,56 +385,56 @@
 
     </section><!-- /Features Section -->
 
-{#    <!-- Features Section -->#}
-{#    <section id="features" class="features section">#}
-{##}
-{#        <div class="container">#}
-{##}
-{#            <ul class="nav nav-tabs row g-2 d-flex" data-aos="fade-up" data-aos-delay="100" role="tablist">#}
-{#                {% for content in content %}#}
-{#                <li class="nav-item col-3" role="presentation">#}
-{#                    <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#features-tab-${{ content.count }}"#}
-{#                       aria-selected="true" role="tab">#}
-{#                        <h4>{{ content.name }}</h4>#}
-{#                    </a>#}
-{#                </li><!-- End tab nav item -->#}
-{##}
-{#            </ul>#}
-{##}
-{#            <div class="tab-content" data-aos="fade-up" data-aos-delay="200">#}
-{#                <div class="tab-pane fade active show" id="features-tab-${{ content.count }}" role="tabpanel">#}
-{#                    <div class="row">#}
-{#                        <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">#}
-{#                            <h3>{{ content.title }}</h3>#}
-{#                            <p class="fst-italic">#}
-{#                                {{ content.body }}#}
-{#                            </p>#}
-{#                            <ul>#}
-{#                                <li><i class="bi bi-check2-all"></i> <span>{{ content.content }}</span>#}
-{#                                </li>#}
-{#                                <li><i class="bi bi-check2-all"></i> <span>{{ content.content1 }}</span>#}
-{#                                </li>#}
-{#                                <li><i class="bi bi-check2-all"></i> <span>{{ content.content2 }}</span>#}
-{#                                </li>#}
-{#                                <li><i class="bi bi-check2-all"></i> <span>{{ content.content3 }}</span>#}
-{#                                </li>#}
-{#                                <li><i class="bi bi-check2-all"></i> <span>{{ content.content4 }}</span>#}
-{#                                </li>#}
-{#                            </ul>#}
-{#                        </div>#}
-{#                        <div class="col-lg-6 order-1 order-lg-2 text-center">#}
-{##}
-{#                            <img src="media/{{ content.main_image }}" alt="{{ content.name_of_alt }}" class="img-fluid">#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div><!-- End tab content item -->#}
-{##}
-{#                {% endfor %}#}
-{#            </div>#}
-{##}
-{#        </div>#}
-{##}
-{#    </section><!-- /Features Section -->#}
+    {#    <!-- Features Section -->#}
+    {#    <section id="features" class="features section">#}
+    {##}
+    {#        <div class="container">#}
+    {##}
+    {#            <ul class="nav nav-tabs row g-2 d-flex" data-aos="fade-up" data-aos-delay="100" role="tablist">#}
+    {#                {% for content in content %}#}
+    {#                <li class="nav-item col-3" role="presentation">#}
+    {#                    <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#features-tab-${{ content.count }}"#}
+    {#                       aria-selected="true" role="tab">#}
+    {#                        <h4>{{ content.name }}</h4>#}
+    {#                    </a>#}
+    {#                </li><!-- End tab nav item -->#}
+    {##}
+    {#            </ul>#}
+    {##}
+    {#            <div class="tab-content" data-aos="fade-up" data-aos-delay="200">#}
+    {#                <div class="tab-pane fade active show" id="features-tab-${{ content.count }}" role="tabpanel">#}
+    {#                    <div class="row">#}
+    {#                        <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">#}
+    {#                            <h3>{{ content.title }}</h3>#}
+    {#                            <p class="fst-italic">#}
+    {#                                {{ content.body }}#}
+    {#                            </p>#}
+    {#                            <ul>#}
+    {#                                <li><i class="bi bi-check2-all"></i> <span>{{ content.content }}</span>#}
+    {#                                </li>#}
+    {#                                <li><i class="bi bi-check2-all"></i> <span>{{ content.content1 }}</span>#}
+    {#                                </li>#}
+    {#                                <li><i class="bi bi-check2-all"></i> <span>{{ content.content2 }}</span>#}
+    {#                                </li>#}
+    {#                                <li><i class="bi bi-check2-all"></i> <span>{{ content.content3 }}</span>#}
+    {#                                </li>#}
+    {#                                <li><i class="bi bi-check2-all"></i> <span>{{ content.content4 }}</span>#}
+    {#                                </li>#}
+    {#                            </ul>#}
+    {#                        </div>#}
+    {#                        <div class="col-lg-6 order-1 order-lg-2 text-center">#}
+    {##}
+    {#                            <img src="media/{{ content.main_image }}" alt="{{ content.name_of_alt }}" class="img-fluid">#}
+    {#                        </div>#}
+    {#                    </div>#}
+    {#                </div><!-- End tab content item -->#}
+    {##}
+    {#                {% endfor %}#}
+    {#            </div>#}
+    {##}
+    {#        </div>#}
+    {##}
+    {#    </section><!-- /Features Section -->#}
 
     <!-- Projects Section -->
     <section id="projects" class="projects section">
@@ -703,33 +526,34 @@
                 <div class="swiper-wrapper">
                     {% for swiper in swiper %}
 
-                    <div class="swiper-slide">
-                        <div class="testimonial-wrap">
-                            <div class="testimonial-item">
-                                <img src="media/{{ swiper.main_image }}" class="testimonial-img" alt="{{ swiper.name_of_alt }}">
-{#                                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">#}
-                                <h3>{{ swiper.name_swiper }}</h3>
-                                <h4>{{ swiper.job_swiper }}</h4>
-                                <div class="stars">
-                                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                        class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                                        class="bi bi-star-fill"></i>
+                        <div class="swiper-slide">
+                            <div class="testimonial-wrap">
+                                <div class="testimonial-item">
+                                    <img src="media/{{ swiper.main_image }}" class="testimonial-img"
+                                         alt="{{ swiper.name_of_alt }}">
+                                    {#                                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">#}
+                                    <h3>{{ swiper.name_swiper }}</h3>
+                                    <h4>{{ swiper.job_swiper }}</h4>
+                                    <div class="stars">
+                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                            class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                                            class="bi bi-star-fill"></i>
+                                    </div>
+                                    <p>
+                                        <i class="bi bi-quote quote-icon-left"></i>
+                                        <span>{{ swiper.description_swiper }}</span>
+                                        <i class="bi bi-quote quote-icon-right"></i>
+                                    </p>
                                 </div>
-                                <p>
-                                    <i class="bi bi-quote quote-icon-left"></i>
-                                    <span>{{ swiper.description_swiper }}</span>
-                                    <i class="bi bi-quote quote-icon-right"></i>
-                                </p>
                             </div>
-                        </div>
-                    </div><!-- End testimonial item -->
+                        </div><!-- End testimonial item -->
 
                     {% endfor %}
-                    </div><!-- End testimonial item -->
+                </div><!-- End testimonial item -->
 
-                </div>
-                <div class="swiper-pagination"></div>
             </div>
+            <div class="swiper-pagination"></div>
+        </div>
 
     </section><!-- /Testimonials Section -->
 
@@ -754,18 +578,18 @@
 
                             <div class="post-img position-relative overflow-hidden">
                                 <img src="media/{{ news.main_picture }}" class="img-fluid" alt="{{ news.title }}">
-{#                                <span class="post-date">{{ news.published_at }}</span>#}
+                                {#                                <span class="post-date">{{ news.published_at }}</span>#}
                                 <span class="post-date">{{ news.published_at|to_jalali:'%H:%M:%S | %Y/%m/%d' }}</span>
                             </div>
 
                             <div class="post-content d-flex flex-column">
 
                                 <h3 class="post-title">{{ news.title }}</h3>
-                                <h6 class="post-summary">{{ news.summary }}</h6>
+                                {#                                <h6 class="post-summary">{{ news.summary }}</h6>#}
 
                                 <div class="meta d-flex align-items-center">
                                     <div class="d-flex align-items-center">
-                                        <i class="bi bi-person"></i> <span class="ps-2">{{ news.user }}</span>
+                                        <i class="bi bi-person"></i> <span class="ps-2">{{ news.author }}</span>
                                     </div>
                                     <span class="px-3 text-black-50">/</span>
                                     <div class="d-flex align-items-center">

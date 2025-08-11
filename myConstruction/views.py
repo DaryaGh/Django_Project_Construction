@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+import Construction
 from myConstruction.models import *
 from django.shortcuts import render
 import requests
@@ -30,6 +31,11 @@ def Home(request):
 
     swiper = Swiper.objects.filter(is_active=True)
 
+    construction = Construction.objects.filter(is_active=True)
+
+    services = Service.objects.filter(is_active=True)
+    servicesfeature = ServicesFeature.objects.filter(is_active=True)
+
     # content = Content.objects.filter(is_active=True)
 
     context = {
@@ -37,8 +43,10 @@ def Home(request):
         'home_projects': home_projects,
         'project_types': project_types,
         'carousels': carousels,
-
         'swiper': swiper,
+        'construction': construction,
+        'services': services,
+        'servicesfeature': servicesfeature,
         # 'content': content,
         'current_date': timezone.now().strftime('%Y/%m/%d')
     }
@@ -48,6 +56,7 @@ def Home(request):
 
 def services(request):
     services = Service.objects.filter(is_active=True)
+    print(services)
     feature = Feature.objects.filter(is_active=True)
     servicesfeatures = ServicesFeature.objects.filter(is_active=True)
     swiper = Swiper.objects.filter(is_active=True)
@@ -66,7 +75,6 @@ def services_details(request, id):
     servicesdetails = ServicesDetail.objects.filter(is_active=True)
 
     return render(request, 'service_details.html', {'servicesdetails': servicesdetails})
-
 
 def projects(request, cat_id=None, ):
     category_name = None
@@ -361,8 +369,10 @@ def delete_news(request, id):
     except News.DoesNotExist:
         return JsonResponse({'status': 'error', 'message': 'News not found'}, status=404)
 
+
 def contact_us(request):
     return render(request, 'contact_us.html', {'contact_us': contact_us})
+
 
 def about_us(request):
     response = requests.get(
@@ -390,6 +400,22 @@ def about_us(request):
 
     return render(request, 'about_us.html', {'data': data, 'boxes': boxes})
 
+def history_us(request):
+    history = HistoryUs.objects.all()
+
+    swiper = Swiper.objects.filter(is_active=True)
+
+    servicesfeatures = ServicesFeature.objects.filter(is_active=True)
+
+    team = Team.objects.filter(is_active=True)
+
+    context = {
+        'history': history,
+        'swiper': swiper,
+        'servicesfeatures': servicesfeatures,
+        'team': team,
+    }
+    return render(request, 'history_us.html', context=context)
 
 def author_detail(request, author_id):
     author = get_object_or_404(Author, pk=author_id, is_active=True)

@@ -2,8 +2,8 @@
 {% load static  %}
 
 {% block page_title %}
-    
-    services_details
+
+{{ services }}
     
 {% endblock %}
 
@@ -17,7 +17,7 @@
           <ol>
             <li><a href="{% url 'home' %}">صفحه اصلی</a></li>
             <li class="current">جزئیات خدمات</li>
-              <li class="current">{{ services }}</li>
+
           </ol>
         </nav>
       </div>
@@ -30,7 +30,7 @@
       <div class="container">
 
         <div class="row gy-4">
-
+{% for servicesdetails in servicesdetails %}
           <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
             <div class="services-list">
               <a href="#" class="active">طراحی وب</a>
@@ -43,9 +43,9 @@
             <h4>لورم ایپسوم متن ساختگی با تولید سادگی</h4>
             <p>              لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز</p>
           </div>
-{% for servicesdetails in servicesdetails %}
+
           <div class="col-lg-8" data-aos="fade-up" data-aos-delay="200">
-            <img src="/img/services.jpg" alt="" class="img-fluid services-img">
+            <img src="{{ servicesdetails.main_picture.url }}" alt="{{ servicesdetails.name_service }}" class="img-fluid services-img">
             <h3>{{ servicesdetails.title }}</h3>
             <p>
               {{ servicesdetails.content }}

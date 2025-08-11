@@ -3,7 +3,7 @@
 
 {% block page_title %}
 
-    services
+ services
 
 {% endblock %}
 
@@ -83,8 +83,9 @@
                     <h3>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم</h3>
                     <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است،
                         چاپگرها و متون بلکه روزنامه</p>
-                    {% for servicesfeature in servicesfeatures %}
+
                         <div class="row">
+                            {% for servicesfeature in servicesfeatures %}
                             <div class="col-lg-6 icon-box d-flex">
                                 <i class="bi bi-{{ servicesfeature.icon_name }} flex-shrink-0"></i>
                                 <div>
@@ -92,16 +93,15 @@
                                     <p>{{ servicesfeature.description }}</p>
                                 </div>
                             </div><!-- End Icon Box -->
+                            {% endfor %}
                         </div>
-                    {% endfor %}
+
                 </div>
-                {% for servicesfeature in servicesfeatures %}
-                    {% for image in servicesfeature.images.all %}
+
                         <div class="features-image col-lg-5 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="200">
-                            <img src="media/{{ image.image.url }}" alt="">
+                            <img src="/static/img/features-3-2.jpg" alt="">
                         </div>
-                    {% endfor %}
-                {% endfor %}
+
             </div>
         </div>
     </section><!-- /Alt Services 2 Section -->
@@ -145,8 +145,12 @@
                         <div class="swiper-slide">
                             <div class="testimonial-wrap">
                                 <div class="testimonial-item">
-                                    <img src="media/{{ swiper.main_image }}" class="testimonial-img"
+{#                                    <img src="media/{{ swiper.main_image }}" class="testimonial-img"#}
+{#                                         alt="{{ swiper.name_of_alt }}">#}
+
+                                    <img src="{{ swiper.main_image.url }}" class="testimonial-img"
                                          alt="{{ swiper.name_of_alt }}">
+
                                     <h3>{{ swiper.name_swiper }}</h3>
                                     <h4>{{ swiper.job_swiper }}</h4>
                                     <div class="stars">

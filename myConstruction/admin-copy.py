@@ -15,7 +15,7 @@ class CarouselAdmin(admin.ModelAdmin):
 
 # class MyInlines1(TabularInlineJalaliMixin, admin.TabularInline):
 #     model = News
-
+#
 # @admin.register(News)
 # class NewsModelAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
 #

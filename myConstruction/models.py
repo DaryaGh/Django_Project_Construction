@@ -42,7 +42,6 @@ class Carousel(models.Model):
 
         return self.start_date_at <= now <= self.end_date_at
 
-
 class CategoryType(Enum):
     NEWS = 'News'
     PROJECT = 'Project'
@@ -50,7 +49,6 @@ class CategoryType(Enum):
     @classmethod
     def choices(cls):
         return [(tag.value, tag.name) for tag in cls]
-
 
 class Category(models.Model):
     title = models.CharField(max_length=100, unique=True ,blank=True,null=True)  # 2 zabaneh ham kalame farsi ham english ro bayad zakhireh konid  #null ro dar enteha refactor konid
@@ -67,7 +65,6 @@ class Category(models.Model):
     def project_count(self):
         return Project.objects.filter(category=self.id).count()
 
-
 class Author(models.Model):
     name_author = models.CharField(max_length=100, blank=True, null=True)
     body_author = models.TextField(blank=True, null=True)
@@ -79,7 +76,6 @@ class Author(models.Model):
     def __str__(self):
         return self.name_author
 
-
 class Tag(models.Model):
     name_tag = models.CharField(max_length=200, blank=True, null=True)
     is_active = models.BooleanField(default=False)
@@ -88,7 +84,6 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name_tag
-
 
 # Gallery(other pictures) / Generic relation -news -project
 class Image(models.Model):
@@ -101,7 +96,6 @@ class Image(models.Model):
 
     def __str__(self):
         return self.image_path.name
-
 
 class Comment(models.Model):
     title = models.CharField(max_length=200, default='title', blank=True, null=True)
@@ -150,7 +144,6 @@ class Comment(models.Model):
         return Comment.objects.filter(parent=self).filter(is_approved=True).order_by('-created_date')
         # Comment.objects.filter(parent=self)#.filter(is_approved=True)
 
-
 class Customer(models.Model):
     name_customer = models.CharField(max_length=100, unique=True,blank=True, null=True)
     website = models.CharField(max_length=100, blank=True, null=True)
@@ -162,7 +155,6 @@ class Customer(models.Model):
     def __str__(self):
         return self.name_customer
 
-
 class ProjectType(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     sort = models.IntegerField(default=0)
@@ -172,7 +164,6 @@ class ProjectType(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class Project(models.Model):
     title = models.CharField(max_length=100,  blank=True, null=True, default='title_project')
@@ -210,7 +201,6 @@ class Project(models.Model):
         related_tags = self.tags.all()
         return random.choice(list(related_tags)) if related_tags.exists() else None
 
-
 class News(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True, default='title_News')
     name_title = models.CharField(max_length=100, blank=True, null=True, default='name_News')
@@ -242,7 +232,6 @@ class News(models.Model):
 
     def __str__(self):
         return self.title
-
 
 class Service(models.Model):
     title = models.CharField(max_length=100,default='title_service')
@@ -283,9 +272,11 @@ class ServicesFeature(models.Model):
 
 class ServicesDetail(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
+    name_service = models.CharField(max_length=100, blank=True, null=True)
     content = models.TextField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     body = models.TextField(null=True, blank=True)
+    main_picture = models.FileField(upload_to='services/', null=True, blank=True)
     summary = models.TextField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     created_date = models.DateTimeField(auto_now_add=True, editable=False, null=True, blank=True)
@@ -296,26 +287,30 @@ class ServicesDetail(models.Model):
 class Review(models.Model):
     pass
 
-
 class Team(models.Model):
-    pass
+    name = models.CharField(max_length=100, blank=True, null=True)
+    main_picture = models.FileField(upload_to='teams/', null=True, blank=True)
+    name_alt = models.CharField(max_length=100, blank=True, null=True)
+    job = models.CharField(max_length=100, blank=True, null=True)
+    description = models.TextField(null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+    created_date = models.DateTimeField(auto_now_add=True, editable=False, null=True, blank=True)
+    updated_date = models.DateTimeField(auto_now=True, editable=False, null=True, blank=True)
 
+    def __str__(self):
+        return self.name_alt or self.name or "Unnamed Team"
 
 class Statistic(models.Model):
     pass
 
-
 class ContactUs(models.Model):
     pass
-
 
 class Setting(models.Model):
     pass
 
-
 class Movie(models.Model):
     pass
-
 
 class Swiper(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True, default='title_swiper')
@@ -330,6 +325,29 @@ class Swiper(models.Model):
     def __str__(self):
         return self.name_swiper
 
+class Construction(models.Model):
+    title = models.CharField(max_length=100, blank=True, null=True)
+    body = models.TextField(null=True, blank=True)
+    main_picture = models.FileField(upload_to='constructions/', null=True, blank=True)
+    name_alt = models.CharField(max_length=100, blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_date = models.DateTimeField(auto_now_add=True, editable=False, null=True, blank=True)
+    updated_date = models.DateTimeField(auto_now=True, editable=False, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+class HistoryUs(models.Model):
+    title = models.CharField(max_length=100, blank=True, null=True)
+    body = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    icon_name = models.CharField(max_length=100, blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+    created_date = models.DateTimeField(auto_now_add=True, editable=False, null=True, blank=True)
+    updated_date = models.DateTimeField(auto_now=True, editable=False, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
 
 # class Content(models.Model):
 #     title = models.CharField(max_length=100, blank=True, null=True, default='title_content')

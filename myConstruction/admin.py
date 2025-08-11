@@ -1,13 +1,11 @@
 from myConstruction.models import *
 from django.contrib import admin
 
-
 @admin.register(Carousel)
 class CarouselAdmin(admin.ModelAdmin):
     list_display = ('title','is_active')
 
     search_fields = ('title', 'caption')
-
 
 admin.site.register(Category)
 admin.site.register(News)
@@ -27,3 +25,6 @@ admin.site.register(Swiper)
 admin.site.register(Feature)
 admin.site.register(ServicesFeature)
 admin.site.register(ServicesDetail)
+admin.site.register(Construction)
+admin.site.register(HistoryUs)
+admin.site.register(Team)
