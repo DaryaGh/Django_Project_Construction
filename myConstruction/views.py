@@ -13,7 +13,9 @@ from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 import json
-
+import time
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 def Home(request):
     home_news = News.objects.filter(is_approved=True).order_by('-published_at')[:3]
@@ -75,6 +77,7 @@ def services_details(request, id):
     servicesdetails = ServicesDetail.objects.filter(is_active=True)
 
     return render(request, 'service_details.html', {'servicesdetails': servicesdetails})
+
 
 def projects(request, cat_id=None, ):
     category_name = None
@@ -370,10 +373,6 @@ def delete_news(request, id):
         return JsonResponse({'status': 'error', 'message': 'News not found'}, status=404)
 
 
-def contact_us(request):
-    return render(request, 'contact_us.html', {'contact_us': contact_us})
-
-
 def about_us(request):
     response = requests.get(
         "https://jsonplaceholder.typicode.com/postsccc",
@@ -400,6 +399,7 @@ def about_us(request):
 
     return render(request, 'about_us.html', {'data': data, 'boxes': boxes})
 
+
 def history_us(request):
     history = HistoryUs.objects.all()
 
@@ -417,6 +417,7 @@ def history_us(request):
     }
     return render(request, 'history_us.html', context=context)
 
+
 def author_detail(request, author_id):
     author = get_object_or_404(Author, pk=author_id, is_active=True)
     author_news = News.objects.filter(
@@ -430,3 +431,86 @@ def author_detail(request, author_id):
         'news_list': author_news,
     }
     return render(request, 'author_detail.html', context)
+
+
+def contact_us(request):
+
+    if request.method == "POST":
+        time.sleep(2)
+        # print('POST')
+        # print(request.POST)
+
+        is_valid = True
+        messages = []
+
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+        if len(name) < 3:
+            is_valid = False
+            messages.append("Name must be 3 letters long")
+
+        if len(subject) < 15:
+            is_valid = False
+            messages.append("Subject must be 15 characters long")
+
+
+
+        # validation
+        # try:
+        #     validate_email(email)
+        #
+        # except ValidationError:
+        #     return JsonResponse({
+        #         'error':'Your Email Is not Valid !!! Please try again',
+        #     })
+        try:
+            validate_email(email)
+            if ContactUs.objects.filter(email_contact=email).exists():
+                is_valid = False
+                messages.append("Email already registered")
+
+        except ValidationError:
+            is_valid = False
+            messages.append("Invalid email address")
+
+        if is_valid:
+            new_contact_us = ContactUs()
+            new_contact_us.user_name = name
+            new_contact_us.email_contact = email
+            new_contact_us.subject = subject
+            new_contact_us.description = message
+
+            new_contact_us.save()
+
+            return JsonResponse({
+                'status': 'ok'
+            })
+
+        return JsonResponse({
+            'error':', '.join(messages),
+        })
+
+    return render(request, 'contact_us.html', {'contact_us': contact_us})
+
+
+def news_search(request):
+    query = request.GET.get('query', '')  # دریافت عبارت جستجو از URL
+
+    if query:
+        # جستجو در عنوان و محتوای خبر
+        results = News.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query)
+        ).distinct()
+    else:
+        results = News.objects.none()
+
+    context = {
+        'results': results,
+        'query': query
+    }
+
+    return render(request, 'Search_result.html' , context)

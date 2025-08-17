@@ -42,6 +42,7 @@ class Carousel(models.Model):
 
         return self.start_date_at <= now <= self.end_date_at
 
+
 class CategoryType(Enum):
     NEWS = 'News'
     PROJECT = 'Project'
@@ -49,6 +50,7 @@ class CategoryType(Enum):
     @classmethod
     def choices(cls):
         return [(tag.value, tag.name) for tag in cls]
+
 
 class Category(models.Model):
     title = models.CharField(max_length=100, unique=True ,blank=True,null=True)  # 2 zabaneh ham kalame farsi ham english ro bayad zakhireh konid  #null ro dar enteha refactor konid
@@ -65,6 +67,7 @@ class Category(models.Model):
     def project_count(self):
         return Project.objects.filter(category=self.id).count()
 
+
 class Author(models.Model):
     name_author = models.CharField(max_length=100, blank=True, null=True)
     body_author = models.TextField(blank=True, null=True)
@@ -76,6 +79,7 @@ class Author(models.Model):
     def __str__(self):
         return self.name_author
 
+
 class Tag(models.Model):
     name_tag = models.CharField(max_length=200, blank=True, null=True)
     is_active = models.BooleanField(default=False)
@@ -84,6 +88,7 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name_tag
+
 
 # Gallery(other pictures) / Generic relation -news -project
 class Image(models.Model):
@@ -96,6 +101,7 @@ class Image(models.Model):
 
     def __str__(self):
         return self.image_path.name
+
 
 class Comment(models.Model):
     title = models.CharField(max_length=200, default='title', blank=True, null=True)
@@ -144,6 +150,7 @@ class Comment(models.Model):
         return Comment.objects.filter(parent=self).filter(is_approved=True).order_by('-created_date')
         # Comment.objects.filter(parent=self)#.filter(is_approved=True)
 
+
 class Customer(models.Model):
     name_customer = models.CharField(max_length=100, unique=True,blank=True, null=True)
     website = models.CharField(max_length=100, blank=True, null=True)
@@ -155,6 +162,7 @@ class Customer(models.Model):
     def __str__(self):
         return self.name_customer
 
+
 class ProjectType(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
     sort = models.IntegerField(default=0)
@@ -164,6 +172,7 @@ class ProjectType(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Project(models.Model):
     title = models.CharField(max_length=100,  blank=True, null=True, default='title_project')
@@ -201,6 +210,7 @@ class Project(models.Model):
         related_tags = self.tags.all()
         return random.choice(list(related_tags)) if related_tags.exists() else None
 
+
 class News(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True, default='title_News')
     name_title = models.CharField(max_length=100, blank=True, null=True, default='name_News')
@@ -233,6 +243,7 @@ class News(models.Model):
     def __str__(self):
         return self.title
 
+
 class Service(models.Model):
     title = models.CharField(max_length=100,default='title_service')
     description = models.TextField(null=True, blank=True)
@@ -243,6 +254,7 @@ class Service(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class Feature(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
@@ -257,6 +269,7 @@ class Feature(models.Model):
     def __str__(self):
         return self.title
 
+
 class ServicesFeature(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField(null=True, blank=True)
@@ -269,6 +282,7 @@ class ServicesFeature(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class ServicesDetail(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
@@ -284,8 +298,10 @@ class ServicesDetail(models.Model):
     def __str__(self):
         return self.title
 
+
 class Review(models.Model):
     pass
+
 
 class Team(models.Model):
     name = models.CharField(max_length=100, blank=True, null=True)
@@ -300,17 +316,35 @@ class Team(models.Model):
     def __str__(self):
         return self.name_alt or self.name or "Unnamed Team"
 
+
 class Statistic(models.Model):
     pass
 
+
 class ContactUs(models.Model):
-    pass
+    # address = models.TextField(max_length=64,blank=True, null=True )
+    # phone = models.CharField(max_length=32,blank=True, null=True)
+    # email = models.EmailField(max_length=32,blank=True, null=True)
+    # map_embed_code = models.TextField(max_length=32,blank=True, null=True)
+    # form
+    user_name = models.CharField(max_length=512,blank=True, null=True)
+    email_contact = models.EmailField(max_length=512,blank=True, null=True , unique=True)
+    subject = models.CharField(max_length=1024,blank=True, null=True)
+    description = models.TextField(null=True, blank=True)
+    created_date = models.DateTimeField(auto_now_add=True, editable=False, null=True, blank=True)
+    updated_date = models.DateTimeField(auto_now=True, editable=False, null=True, blank=True)
+
+    def __str__(self):
+        return self.subject
+
 
 class Setting(models.Model):
     pass
 
+
 class Movie(models.Model):
     pass
+
 
 class Swiper(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True, default='title_swiper')
@@ -325,6 +359,7 @@ class Swiper(models.Model):
     def __str__(self):
         return self.name_swiper
 
+
 class Construction(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
     body = models.TextField(null=True, blank=True)
@@ -336,6 +371,7 @@ class Construction(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class HistoryUs(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
